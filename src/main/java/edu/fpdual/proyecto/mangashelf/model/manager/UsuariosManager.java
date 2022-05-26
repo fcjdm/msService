@@ -2,6 +2,9 @@ package edu.fpdual.proyecto.mangashelf.model.manager;
 
 import edu.fpdual.proyecto.mangashelf.model.dao.Usuarios;
 
+import java.sql.Connection;
+import java.sql.SQLException;
+
 /**
  * Usuarios DTO Manager.
  *
@@ -10,7 +13,11 @@ import edu.fpdual.proyecto.mangashelf.model.dao.Usuarios;
  * @author ikisaki
  *
  */
-public interface UsuariosManager extends Manager<Usuarios>{
+public interface UsuariosManager{
+
+    public int createUser (Connection con, String email, String password) throws SQLException;
+    public int deleteUser (Connection con, String email, String password) throws SQLException;
+    public int changePassword (Connection con ,String email, String oldPassword, String newPassword) throws SQLException;
 
 
 

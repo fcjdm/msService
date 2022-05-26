@@ -15,14 +15,12 @@ public class Main {
 
         try (Connection con = new MySQLConnector().getMySQLConnection()) {
 
-            Set<Autor> autores = new AutorManagerImpl().findByName(con, "Ge");
+            int usuario = new UsuariosManagerImpl().createUser(con, "juan", "1234");
 
-            for (Autor autor : autores) {
+            System.out.println(usuario);
 
-                System.out.println(autor.getNombre() + " | " + autor.getTitulo());
-
-            }
-
+            usuario =  new UsuariosManagerImpl().changePassword(con, "juan","1234", "546");
+            System.out.println(usuario);
         }
     }
 

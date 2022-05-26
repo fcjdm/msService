@@ -1,15 +1,8 @@
 package edu.fpdual.proyecto.mangashelf.model.manager.impl;
 
-import edu.fpdual.proyecto.mangashelf.model.dao.Usuarios;
 import edu.fpdual.proyecto.mangashelf.model.manager.UsuariosManager;
 
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Set;
+import java.sql.*;
 
 /**
  * Usuarios DTO Manager.
@@ -21,28 +14,38 @@ import java.util.Set;
  */
 public class UsuariosManagerImpl implements UsuariosManager {
 
+
     @Override
-    public Set<Usuarios> findAll(Connection con) {
-        return null;
+    public int createUser(Connection con, String email, String password) throws SQLException {
+        try(PreparedStatement prepstm = con.prepareStatement("INSERT INTO mangas.usuarios(emailUsuario, contrasenyaUsuario)" +
+                "VALUES (?,?)")){
+            prepstm.setString(1, email);
+            prepstm.setString(2, password);
+
+            return prepstm.executeUpdate();
+        }
     }
 
     @Override
-    public Set<Usuarios> findByOrderAsc(Connection con) throws SQLException {
-        return null;
+    public int deleteUser(Connection con, String email, String password) throws SQLException {
+        try(PreparedStatement prepstm = con.prepareStatement("DELETE FROM mangas.usuarios " +
+                "WHERE usuarios.emailUsuario = ? AND usuarios.contrasenyaUsuario = ?")){
+            prepstm.setString(1, email);
+            prepstm.setString(2, password);
+
+            return prepstm.executeUpdate();
+        }
     }
 
     @Override
-    public Set<Usuarios> findByOrderDesc(Connection con) throws SQLException {
-        return null;
-    }
+    public int changePassword(Connection con, String email, String oldPassword, String newPassword) throws SQLException {
+        try(PreparedStatement prepstm = con.prepareStatement("UPDATE mangas.usuarios " +
+                "SET contrasenyaUsuario = ? WHERE emailUsuario = ? AND contrasenyaUsuario = ?")){
+            prepstm.setString(1, newPassword);
+            prepstm.setString(2, email);
+            prepstm.setString(3, oldPassword);
 
-    @Override
-    public Set<Usuarios> findByName(Connection con, String name) throws SQLException {
-        return null;
-    }
-
-    @Override
-    public Set<Usuarios> queryResult(ResultSet result) throws SQLException {
-        return null;
+            return prepstm.executeUpdate();
+        }
     }
 }
