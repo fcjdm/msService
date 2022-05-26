@@ -8,7 +8,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
-import java.util.List;
+import java.util.Set;
 
 /**
  * ObraUsuario DTO Manager.
@@ -21,30 +21,29 @@ import java.util.List;
 public class ObraUsuarioManagerImpl implements ObraUsuarioManager {
 
     @Override
-    public List<ObraUsuario> findAll(Connection con) {
+    public Set<ObraUsuario> findAll(Connection con) {
         // Crea el statement general.
-        try (Statement stmt = con.createStatement()) {
-            // Realiza la consulta de la BBDD.
-            ResultSet result = stmt.executeQuery("SELECT * FROM Obra_usuario");
-            // Set antes del primer registro.
-            result.beforeFirst();
+        return null;
+    }
 
-            // Inicializar variable.
-            List<ObraUsuario> obrasUsuarios = new ArrayList<>();
+    @Override
+    public Set<ObraUsuario> findByOrderAsc(Connection con) throws SQLException {
+        return null;
+    }
 
-            // Recorre cada resultado.
-            while (result.next()) {
-                // Añade una obra por resultado.
-                obrasUsuarios.add(new ObraUsuario(result));
+    @Override
+    public Set<ObraUsuario> findByOrderDesc(Connection con) throws SQLException {
+        return null;
+    }
 
-            }
+    @Override
+    public Set<ObraUsuario> findByName(Connection con, String name) throws SQLException {
+        return null;
+    }
 
-            return obrasUsuarios;
-
-        } catch (SQLException e) {
-            e.printStackTrace();
-            return null;
-        }
+    @Override
+    public Set<ObraUsuario> queryResult(ResultSet result) throws SQLException {
+        return null;
     }
 }
 

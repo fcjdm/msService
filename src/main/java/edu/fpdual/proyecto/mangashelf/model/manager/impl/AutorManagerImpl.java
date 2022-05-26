@@ -3,12 +3,11 @@ package edu.fpdual.proyecto.mangashelf.model.manager.impl;
 import edu.fpdual.proyecto.mangashelf.model.dao.Autor;
 import edu.fpdual.proyecto.mangashelf.model.manager.AutorManager;
 
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
+import java.util.LinkedHashSet;
+import java.util.Set;
 
 /**
  * Autor DTO Manager.
@@ -21,28 +20,71 @@ import java.util.List;
 public class AutorManagerImpl implements AutorManager {
 
     @Override
-    public List<Autor> findAll(Connection con) {
+    public Set<Autor> findAll(Connection con) throws SQLException {
         // Crea el statement general.
         try (Statement stmt = con.createStatement()) {
             // Realiza la consulta de la BBDD.
-            ResultSet result = stmt.executeQuery("SELECT * FROM Autor");
-            // Set antes del primer registro.
-            result.beforeFirst();
+            ResultSet result = stmt.executeQuery("SELECT * FROM mangas.autor");
 
-            // Inicializar variable.
-            List<Autor> autores = new ArrayList<>();
-
-            // Recorre cada resultado.
-            while (result.next()) {
-                // Añade un autor por resultado.
-                autores.add(new Autor(result));
-            }
-
-            return autores;
+            return queryResult(result);
 
         } catch (SQLException e) {
             e.printStackTrace();
             return null;
         }
+    }
+
+    @Override
+    public Set<Autor> findByOrderAsc(Connection con)throws SQLException {
+        // Crea el statement general.
+        try (Statement stmt = con.createStatement()) {
+            // Realiza la consulta de la BBDD.
+            ResultSet result = stmt.executeQuery("SELECT * FROM mangas.autor ORDER BY autor.nombre ASC");
+
+            return queryResult(result);
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    @Override
+    public Set<Autor> findByOrderDesc(Connection con) throws SQLException {
+        // Crea el statement general.
+        try (Statement stmt = con.createStatement()) {
+            // Realiza la consulta de la BBDD.
+            ResultSet result = stmt.executeQuery("SELECT * FROM mangas.autor ORDER BY autor.nombre DESC");
+
+            return queryResult(result);
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    @Override
+    public Set<Autor> findByName(Connection con, String name) throws SQLException  {
+        try(PreparedStatement prepstm = con.prepareStatement("SELECT * FROM mangas.autor " +
+                "WHERE autor.nombre LIKE ?")){
+
+            prepstm.setString(1, "%" + name + "%");
+
+            ResultSet result = prepstm.executeQuery();
+            return queryResult(result);
+        }
+    }
+
+    @Override
+    public Set<Autor> queryResult(ResultSet result) throws SQLException {
+        Set<Autor> set = new LinkedHashSet<>();
+        result.beforeFirst();
+        while (result.next()) {
+            Autor autor = new Autor(result);
+            set.add(autor);
+        }
+
+        return set;
     }
 }
