@@ -1,14 +1,8 @@
 package edu.fpdual.proyecto.mangashelf.controller;
 
 import edu.fpdual.proyecto.mangashelf.model.connector.MySQLConnector;
-import edu.fpdual.proyecto.mangashelf.model.dao.Autor;
-import edu.fpdual.proyecto.mangashelf.model.dao.Genero;
-import edu.fpdual.proyecto.mangashelf.model.dao.Obra;
-import edu.fpdual.proyecto.mangashelf.model.dao.Puntuacion;
-import edu.fpdual.proyecto.mangashelf.model.manager.impl.AutorManagerImpl;
-import edu.fpdual.proyecto.mangashelf.model.manager.impl.GeneroManagerImpl;
-import edu.fpdual.proyecto.mangashelf.model.manager.impl.ObraManagerImpl;
-import edu.fpdual.proyecto.mangashelf.model.manager.impl.PuntuacionManagerImpl;
+import edu.fpdual.proyecto.mangashelf.model.dao.*;
+import edu.fpdual.proyecto.mangashelf.model.manager.impl.*;
 
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -46,18 +40,29 @@ public class Main {
 
             for (Obra obra : obras) {
 
-                System.out.println(obra.getTitulo()+" | "+obra.getAnyoPublicacion()+" | "+obra.getAnyoTermino()+" | "+obra.getCapitulosLeidos()+" | "+obra.getCapitulosTotales()+" | "+obra.getEstado());
+                System.out.println(obra.getTitulo()+" | "+obra.getAnyoPublicacion()+" | "+obra.getAnyoTermino()+" | "+obra.getCapitulosTotales());
 
             }
 
             System.out.println("");
             System.out.println("");
 
-            List<Puntuacion> puntuaciones = new PuntuacionManagerImpl().findAll(con);
+            List<ObraUsuario> obrasUsuarios = new ObraUsuarioManagerImpl().findAll(con);
 
-            for (Puntuacion puntuacion : puntuaciones) {
+            for (ObraUsuario obraUsuario : obrasUsuarios) {
 
-                System.out.println(puntuacion.getPuntuacion()+" | "+puntuacion.getTitulo());
+                System.out.println(obraUsuario.getUsuario()+" | "+obraUsuario.getObra()+" | "+obraUsuario.getCapitulosLeidos()+" | "+obraUsuario.getEstado());
+
+            }
+
+            System.out.println("");
+            System.out.println("");
+
+            List<Usuarios> usuarios = new UsuariosManagerImpl().findAll(con);
+
+            for (Usuarios usuario : usuarios) {
+
+                System.out.println(usuario.getEmailUsuario()+" | "+usuario.getContrasenyaUsuario());
 
             }
 

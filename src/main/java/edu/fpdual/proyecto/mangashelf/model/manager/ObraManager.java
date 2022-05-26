@@ -3,7 +3,7 @@ package edu.fpdual.proyecto.mangashelf.model.manager;
 import edu.fpdual.proyecto.mangashelf.model.dao.Obra;
 
 /**
- * Autor DTO Manager.
+ * Obra DTO Manager.
  *
  * Contiene todas las queries utilizadas para la consulta y manipulacion de datos de Obra.
  *

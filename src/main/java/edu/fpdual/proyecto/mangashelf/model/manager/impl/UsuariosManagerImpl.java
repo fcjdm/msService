@@ -1,7 +1,7 @@
 package edu.fpdual.proyecto.mangashelf.model.manager.impl;
 
-import edu.fpdual.proyecto.mangashelf.model.dao.Puntuacion;
-import edu.fpdual.proyecto.mangashelf.model.manager.PuntuacionManager;
+import edu.fpdual.proyecto.mangashelf.model.dao.Usuarios;
+import edu.fpdual.proyecto.mangashelf.model.manager.UsuariosManager;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -11,35 +11,35 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Autor DTO Manager.
+ * Usuarios DTO Manager.
  *
- * Contiene todas las queries utilizadas para la consulta y manipulacion de datos de Puntuacion.
+ * Contiene todas las queries definidas utilizadas para la consulta y manipulacion de datos de Usuarios.
  *
  * @author ikisaki
  *
  */
-public class PuntuacionManagerImpl implements PuntuacionManager {
+public class UsuariosManagerImpl implements UsuariosManager {
 
     @Override
-    public List<Puntuacion> findAll(Connection con) {
+    public List<Usuarios> findAll(Connection con) {
         // Crea el statement general.
         try (Statement stmt = con.createStatement()) {
             // Realiza la consulta de la BBDD.
-            ResultSet result = stmt.executeQuery("SELECT * FROM Puntuacion");
+            ResultSet result = stmt.executeQuery("SELECT * FROM Usuarios");
             // Set antes del primer registro.
             result.beforeFirst();
 
             // Inicializar variable.
-            List<Puntuacion> puntuaciones = new ArrayList<>();
+            List<Usuarios> usuarios = new ArrayList<>();
 
             // Recorre cada resultado.
             while (result.next()) {
-                // Añade una puntuacion por resultado.
-                puntuaciones.add(new Puntuacion(result));
+                // Añade una obra por resultado.
+                usuarios.add(new Usuarios(result));
 
             }
 
-            return puntuaciones;
+            return usuarios;
 
         } catch (SQLException e) {
             e.printStackTrace();

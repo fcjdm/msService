@@ -11,7 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Autor DTO Manager.
+ * Genero DTO Manager.
  *
  * Contiene todas las queries definidas utilizadas para la consulta y manipulacion de datos de Genero.
  *
