@@ -1,2 +1,2 @@
-# mangashelf
-gestor de mangas
+# MangaShelf WebService
+Servicio web de la aplicacion Mangashelf
