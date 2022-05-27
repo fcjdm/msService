@@ -1,4 +1,4 @@
-package edu.fpdual.proyecto.mangashelf;
+package edu.fpdual.webservice;
 
 public enum Status {
     PENDIENTE, LEYENDO, LEIDO

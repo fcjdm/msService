@@ -1,8 +1,10 @@
-package edu.fpdual.proyecto.mangashelf.model.manager.impl;
+package edu.fpdual.webservice.model.manager.impl;
 
-import edu.fpdual.proyecto.mangashelf.model.manager.UsuariosManager;
+import edu.fpdual.webservice.model.manager.UsuariosManager;
 
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
 
 /**
  * Usuarios DTO Manager.

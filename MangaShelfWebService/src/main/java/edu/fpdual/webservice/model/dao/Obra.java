@@ -1,4 +1,4 @@
-package edu.fpdual.proyecto.mangashelf.model.dao;
+package edu.fpdual.webservice.model.dao;
 
 import lombok.*;
 

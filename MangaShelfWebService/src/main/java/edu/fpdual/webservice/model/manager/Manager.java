@@ -1,4 +1,4 @@
-package edu.fpdual.proyecto.mangashelf.model.manager;
+package edu.fpdual.webservice.model.manager;
 
 import java.sql.Connection;
 import java.sql.ResultSet;

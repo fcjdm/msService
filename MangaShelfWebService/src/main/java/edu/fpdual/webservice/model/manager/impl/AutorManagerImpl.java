@@ -1,29 +1,29 @@
-package edu.fpdual.proyecto.mangashelf.model.manager.impl;
+package edu.fpdual.webservice.model.manager.impl;
 
-import edu.fpdual.proyecto.mangashelf.model.dao.Genero;
-import edu.fpdual.proyecto.mangashelf.model.dao.Obra;
-import edu.fpdual.proyecto.mangashelf.model.manager.ObraManager;
+
+import edu.fpdual.webservice.model.dao.Autor;
+import edu.fpdual.webservice.model.manager.AutorManager;
 
 import java.sql.*;
 import java.util.LinkedHashSet;
 import java.util.Set;
 
 /**
- * Obra DTO Manager.
+ * Autor DTO Manager.
  *
- * Contiene todas las queries definidas utilizadas para la consulta y manipulacion de datos de Obra.
+ * Contiene todas las queries definidas utilizadas para la consulta y manipulacion de datos de Autor.
  *
  * @author ikisaki
  *
  */
-public class ObraManagerImpl implements ObraManager {
+public class AutorManagerImpl implements AutorManager {
 
     @Override
-    public Set<Obra> findAll(Connection con) throws SQLException {
+    public Set<Autor> findAll(Connection con) throws SQLException {
         // Crea el statement general.
         try (Statement stmt = con.createStatement()) {
             // Realiza la consulta de la BBDD.
-            ResultSet result = stmt.executeQuery("SELECT * FROM mangas.obra");
+            ResultSet result = stmt.executeQuery("SELECT * FROM mangas.autor");
 
             return queryResult(result);
 
@@ -34,11 +34,11 @@ public class ObraManagerImpl implements ObraManager {
     }
 
     @Override
-    public Set<Obra> findByOrderAsc(Connection con)throws SQLException {
+    public Set<Autor> findByOrderAsc(Connection con)throws SQLException {
         // Crea el statement general.
         try (Statement stmt = con.createStatement()) {
             // Realiza la consulta de la BBDD.
-            ResultSet result = stmt.executeQuery("SELECT * FROM mangas.obra ORDER BY obra.titulo ASC");
+            ResultSet result = stmt.executeQuery("SELECT * FROM mangas.autor ORDER BY autor.nombre ASC");
 
             return queryResult(result);
 
@@ -49,11 +49,11 @@ public class ObraManagerImpl implements ObraManager {
     }
 
     @Override
-    public Set<Obra> findByOrderDesc(Connection con) throws SQLException {
+    public Set<Autor> findByOrderDesc(Connection con) throws SQLException {
         // Crea el statement general.
         try (Statement stmt = con.createStatement()) {
             // Realiza la consulta de la BBDD.
-            ResultSet result = stmt.executeQuery("SELECT * FROM mangas.obra ORDER BY obra.titulo DESC");
+            ResultSet result = stmt.executeQuery("SELECT * FROM mangas.autor ORDER BY autor.nombre DESC");
 
             return queryResult(result);
 
@@ -64,9 +64,9 @@ public class ObraManagerImpl implements ObraManager {
     }
 
     @Override
-    public Set<Obra> findByName(Connection con, String name) throws SQLException  {
-        try(PreparedStatement prepstm = con.prepareStatement("SELECT * FROM mangas.obra " +
-                "WHERE obra.titulo LIKE ?")){
+    public Set<Autor> findByName(Connection con, String name) throws SQLException  {
+        try(PreparedStatement prepstm = con.prepareStatement("SELECT * FROM mangas.autor " +
+                "WHERE autor.nombre LIKE ?")){
 
             prepstm.setString(1, "%" + name + "%");
 
@@ -76,12 +76,12 @@ public class ObraManagerImpl implements ObraManager {
     }
 
     @Override
-    public Set<Obra> queryResult(ResultSet result) throws SQLException {
-        Set<Obra> set = new LinkedHashSet<>();
+    public Set<Autor> queryResult(ResultSet result) throws SQLException {
+        Set<Autor> set = new LinkedHashSet<>();
         result.beforeFirst();
         while (result.next()) {
-            Obra obra = new Obra(result);
-            set.add(obra);
+            Autor autor = new Autor(result);
+            set.add(autor);
         }
 
         return set;

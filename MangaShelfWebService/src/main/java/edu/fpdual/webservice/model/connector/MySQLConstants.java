@@ -1,4 +1,4 @@
-package edu.fpdual.proyecto.mangashelf.model.connector;
+package edu.fpdual.webservice.model.connector;
 
 public class MySQLConstants {
 

@@ -1,7 +1,8 @@
-package edu.fpdual.proyecto.mangashelf.model.manager.impl;
+package edu.fpdual.webservice.model.manager.impl;
 
-import edu.fpdual.proyecto.mangashelf.model.dao.Genero;
-import edu.fpdual.proyecto.mangashelf.model.manager.GeneroManager;
+
+import edu.fpdual.webservice.model.dao.Genero;
+import edu.fpdual.webservice.model.manager.GeneroManager;
 
 import java.sql.*;
 import java.util.LinkedHashSet;

@@ -1,6 +1,4 @@
-package edu.fpdual.proyecto.mangashelf.model.manager;
-
-import edu.fpdual.proyecto.mangashelf.model.dao.Usuarios;
+package edu.fpdual.webservice.model.manager;
 
 import java.sql.Connection;
 import java.sql.SQLException;

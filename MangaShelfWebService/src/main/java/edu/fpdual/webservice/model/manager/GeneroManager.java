@@ -1,6 +1,7 @@
-package edu.fpdual.proyecto.mangashelf.model.manager;
+package edu.fpdual.webservice.model.manager;
 
-import edu.fpdual.proyecto.mangashelf.model.dao.Genero;
+
+import edu.fpdual.webservice.model.dao.Genero;
 
 /**
  * Genero DTO Manager.

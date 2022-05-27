@@ -1,4 +1,4 @@
-package edu.fpdual.proyecto.mangashelf.model.dao;
+package edu.fpdual.webservice.model.dao;
 
 import lombok.*;
 
@@ -12,14 +12,14 @@ import java.sql.SQLException;
 @EqualsAndHashCode
 @ToString
 @Builder
-public class Autor {
+public class Genero {
 
+    private String genero;
     private String titulo;
-    private String nombre;
 
-    public Autor(ResultSet result) throws SQLException {
+    public Genero(ResultSet result) throws SQLException {
+        setGenero(result.getString("Genero"));
         setTitulo(result.getString("Titulo"));
-        setNombre(result.getString("Nombre"));
     }
 
 

@@ -1,13 +1,11 @@
-package edu.fpdual.proyecto.mangashelf.model.manager.impl;
+package edu.fpdual.webservice.model.manager.impl;
 
-import edu.fpdual.proyecto.mangashelf.model.dao.ObraUsuario;
-import edu.fpdual.proyecto.mangashelf.model.manager.ObraUsuarioManager;
+import edu.fpdual.webservice.model.dao.ObraUsuario;
+import edu.fpdual.webservice.model.manager.ObraUsuarioManager;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
-import java.util.ArrayList;
 import java.util.Set;
 
 /**
