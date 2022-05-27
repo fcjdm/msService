@@ -3,6 +3,7 @@ package edu.fpdual.webservice.model.manager;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.LinkedHashSet;
 import java.util.Set;
 
 public interface Manager<T> {

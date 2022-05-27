@@ -40,7 +40,7 @@ public class AutorManagerImpl implements AutorManager {
             // Realiza la consulta de la BBDD.
             ResultSet result = stmt.executeQuery("SELECT * FROM mangas.autor ORDER BY autor.nombre ASC");
 
-            return queryResult(result);
+            return (LinkedHashSet<Autor>) queryResult(result);
 
         } catch (SQLException e) {
             e.printStackTrace();
@@ -55,7 +55,7 @@ public class AutorManagerImpl implements AutorManager {
             // Realiza la consulta de la BBDD.
             ResultSet result = stmt.executeQuery("SELECT * FROM mangas.autor ORDER BY autor.nombre DESC");
 
-            return queryResult(result);
+            return (LinkedHashSet<Autor>) queryResult(result);
 
         } catch (SQLException e) {
             e.printStackTrace();
