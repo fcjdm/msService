@@ -1,8 +1,6 @@
 package edu.fpdual.webservice.controller;
 
-import edu.fpdual.webservice.model.manager.impl.AutorManagerImpl;
 import edu.fpdual.webservice.model.manager.impl.GeneroManagerImpl;
-import edu.fpdual.webservice.service.AutorService;
 import edu.fpdual.webservice.service.GeneroService;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;

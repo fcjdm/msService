@@ -1,11 +1,8 @@
 package edu.fpdual.webservice.service;
 
 import edu.fpdual.webservice.model.connector.MySQLConnector;
-import edu.fpdual.webservice.model.dao.Autor;
 import edu.fpdual.webservice.model.dao.Genero;
-import edu.fpdual.webservice.model.manager.AutorManager;
 import edu.fpdual.webservice.model.manager.GeneroManager;
-import edu.fpdual.webservice.model.manager.impl.AutorManagerImpl;
 import edu.fpdual.webservice.model.manager.impl.GeneroManagerImpl;
 
 import java.sql.Connection;

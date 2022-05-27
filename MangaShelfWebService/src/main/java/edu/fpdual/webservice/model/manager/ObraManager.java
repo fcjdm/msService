@@ -1,6 +1,5 @@
 package edu.fpdual.webservice.model.manager;
 
-
 import edu.fpdual.webservice.model.dao.Obra;
 
 /**
