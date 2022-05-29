@@ -18,40 +18,51 @@ public class ObraUsuarioController {
     }
 
     @GET
-    @Path("/get")
+    @Path("/get/{email}")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response findAll() throws SQLException, ClassNotFoundException{
-        return Response.ok().entity(obraUsuarioService.findAll()).build();
+    public Response findByUser(@PathParam("email") String email) throws SQLException, ClassNotFoundException{
+        return Response.ok().entity(obraUsuarioService.findByUser(email)).build();
     }
 
-    @GET
-    @Path("/get/asc")
+    @POST
+    @Path("/create/{email}/{obraleyendo}")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response findByOrderAsc() throws SQLException, ClassNotFoundException{
-        return Response.ok().entity(obraUsuarioService.findByOrderAsc()).build();
-    }
-
-    @GET
-    @Path("/get/desc")
-    @Produces(MediaType.APPLICATION_JSON)
-    public Response findByOrderDesc() throws SQLException, ClassNotFoundException{
-        return Response.ok().entity(obraUsuarioService.findByOrderDesc()).build();
-    }
-
-    @GET
-    @Path("/get/{name}")
-    @Produces(MediaType.APPLICATION_JSON)
-    public Response findByName(@PathParam("name") String name) {
+    public void createUser(@PathParam("email") String email, @PathParam("obraleyendo") String obraLeyendo){
         try {
-            if (name == null) {
-                return Response.status(400).entity("Incorrect Parameters").build();
-            } else {
-                return Response.ok().entity(obraUsuarioService.findByName(name)).build();
+            int creado = obraUsuarioService.createObraUsuario(email, obraLeyendo);
+            if(creado != 1){
+                System.out.println(Response.status(500).entity("Internal Error During Creating The User").build());
             }
         } catch (SQLException | ClassNotFoundException e) {
-            return Response.status(500).entity("Internal Error During DB Interaction").build();
+            System.out.println(Response.status(500).entity("Internal Error During DB Interaction").build());
+        }
+    }
+
+    @DELETE
+    @Path("/delete/{email}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public void deleteUser(@PathParam("email") String email) {
+        try {
+            if (obraUsuarioService.deleteObraUsuario(email) != 1) {
+                System.out.println(Response.status(304).entity("User Was Not Deleted").build());
+            }
+        } catch (SQLException | ClassNotFoundException e) {
+            System.out.println(Response.status(500).entity("Internal Error During DB Interaction").build());
         }
 
+    }
+
+    @PUT
+    @Path("/update/{email}/{obraleyendo}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public void changePassword(@PathParam("email") String email, @PathParam("obraleyendo") String obraLeyendo){
+        try {
+            if(obraUsuarioService.sumarCapitulo(email, obraLeyendo) != 1){
+                System.out.println(Response.status(500).entity("Internal Error During Chapter Addition").build());
+            }
+        } catch (SQLException | ClassNotFoundException e) {
+            System.out.println(Response.status(500).entity("Internal Error During DB Interaction").build());
+        }
     }
 
 }

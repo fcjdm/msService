@@ -17,27 +17,27 @@ public class ObraUsuarioService {
         this.obraUsuarioManager = obraUsuarioManager;
     }
 
-    public Set<ObraUsuario> findAll() throws SQLException, ClassNotFoundException {
+    public Set<ObraUsuario> findByUser(String email) throws SQLException, ClassNotFoundException {
         try (Connection con = new MySQLConnector().getMySQLConnection()) {
-            return obraUsuarioManager.findAll(con);
+            return obraUsuarioManager.findByUser(con, email);
         }
     }
 
-    public Set<ObraUsuario> findByOrderAsc() throws SQLException, ClassNotFoundException {
+    public int createObraUsuario(String email, String obraLeyendo) throws SQLException, ClassNotFoundException {
         try (Connection con = new MySQLConnector().getMySQLConnection()) {
-            return obraUsuarioManager.findByOrderAsc(con);
+            return obraUsuarioManager.createObraUsuario(con, email, obraLeyendo);
         }
     }
 
-    public Set<ObraUsuario> findByOrderDesc() throws SQLException, ClassNotFoundException {
+    public int deleteObraUsuario(String email) throws SQLException, ClassNotFoundException {
         try (Connection con = new MySQLConnector().getMySQLConnection()) {
-            return obraUsuarioManager.findByOrderDesc(con);
+            return obraUsuarioManager.deleteObraUsuario(con, email);
         }
     }
 
-    public Set<ObraUsuario> findByName(String nombre) throws SQLException, ClassNotFoundException {
+    public int sumarCapitulo(String email, String obraLeyendo) throws SQLException, ClassNotFoundException {
         try (Connection con = new MySQLConnector().getMySQLConnection()) {
-            return obraUsuarioManager.findByName(con, nombre);
+            return obraUsuarioManager.sumarCapitulo(con, email, obraLeyendo);
         }
     }
 

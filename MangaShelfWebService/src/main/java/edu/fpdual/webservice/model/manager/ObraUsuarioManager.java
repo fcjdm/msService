@@ -2,6 +2,11 @@ package edu.fpdual.webservice.model.manager;
 
 import edu.fpdual.webservice.model.dao.ObraUsuario;
 
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.Set;
+
 /**
  * ObraUsuario DTO Manager.
  *
@@ -10,8 +15,12 @@ import edu.fpdual.webservice.model.dao.ObraUsuario;
  * @author ikisaki
  *
  */
-public interface ObraUsuarioManager extends Manager<ObraUsuario>{
+public interface ObraUsuarioManager{
 
-
+    public Set<ObraUsuario> findByUser (Connection con, String email) throws SQLException;
+    public int createObraUsuario (Connection con, String email, String obraLeyendo) throws SQLException;
+    public int deleteObraUsuario (Connection con, String email) throws SQLException;
+    public int sumarCapitulo (Connection con, String email, String obraLeyendo) throws SQLException;
+    public Set<ObraUsuario> queryResult (ResultSet result) throws SQLException;
 
 }
