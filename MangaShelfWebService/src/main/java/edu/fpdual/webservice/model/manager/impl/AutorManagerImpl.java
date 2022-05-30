@@ -27,9 +27,6 @@ public class AutorManagerImpl implements AutorManager {
 
             return queryResult(result);
 
-        } catch (SQLException e) {
-            e.printStackTrace();
-            return null;
         }
     }
 
@@ -42,9 +39,6 @@ public class AutorManagerImpl implements AutorManager {
 
             return (LinkedHashSet<Autor>) queryResult(result);
 
-        } catch (SQLException e) {
-            e.printStackTrace();
-            return null;
         }
     }
 
@@ -57,9 +51,6 @@ public class AutorManagerImpl implements AutorManager {
 
             return (LinkedHashSet<Autor>) queryResult(result);
 
-        } catch (SQLException e) {
-            e.printStackTrace();
-            return null;
         }
     }
 

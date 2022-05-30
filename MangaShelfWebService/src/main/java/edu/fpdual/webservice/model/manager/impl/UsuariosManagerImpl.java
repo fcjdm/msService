@@ -1,10 +1,15 @@
 package edu.fpdual.webservice.model.manager.impl;
 
+import edu.fpdual.webservice.model.dao.Obra;
+import edu.fpdual.webservice.model.dao.Usuarios;
 import edu.fpdual.webservice.model.manager.UsuariosManager;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.LinkedHashSet;
+import java.util.Set;
 
 /**
  * Usuarios DTO Manager.
@@ -16,6 +21,28 @@ import java.sql.SQLException;
  */
 public class UsuariosManagerImpl implements UsuariosManager {
 
+
+    @Override
+    public Set<Usuarios> login(Connection con, String email, String password) throws SQLException {
+        try(PreparedStatement prepstm = con.prepareStatement("SELECT usuarios.emailUsuarios FROM mangas.usuarios " +
+                "WHERE usuarios.emailUsuarios = ? AND usuarios.contrasenyaUsuario = ?")){
+
+            prepstm.setString(1, email);
+            prepstm.setString(1, password);
+
+            ResultSet result = prepstm.executeQuery();
+
+            Set<Usuarios> set = new LinkedHashSet<>();
+            result.beforeFirst();
+            while (result.next()) {
+                Usuarios usuario = new Usuarios(result);
+                set.add(usuario);
+            }
+
+            return set;
+
+        }
+    }
 
     @Override
     public int createUser(Connection con, String email, String password) throws SQLException {

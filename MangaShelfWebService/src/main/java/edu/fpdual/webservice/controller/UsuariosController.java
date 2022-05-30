@@ -17,6 +17,13 @@ public class UsuariosController {
         this.usuariosService = new UsuariosService(new UsuariosManagerImpl());
     }
 
+    @GET
+    @Path("/login/{email}/{password}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response login(@PathParam("email") String email, @PathParam("password") String password) throws SQLException, ClassNotFoundException {
+            return Response.ok().entity(usuariosService.login(email, password)).build();
+    }
+
     @POST
     @Path("/create/{email}/{password}")
     @Produces(MediaType.APPLICATION_JSON)
