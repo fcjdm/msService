@@ -23,7 +23,7 @@ public class AutorManagerImpl implements AutorManager {
         // Crea el statement general.
         try (Statement stmt = con.createStatement()) {
             // Realiza la consulta de la BBDD.
-            ResultSet result = stmt.executeQuery("SELECT * FROM mangas.autor");
+            ResultSet result = stmt.executeQuery("SELECT * FROM autor");
 
             return queryResult(result);
 
@@ -35,7 +35,7 @@ public class AutorManagerImpl implements AutorManager {
         // Crea el statement general.
         try (Statement stmt = con.createStatement()) {
             // Realiza la consulta de la BBDD.
-            ResultSet result = stmt.executeQuery("SELECT * FROM mangas.autor ORDER BY autor.nombre ASC");
+            ResultSet result = stmt.executeQuery("SELECT * FROM autor ORDER BY nombre ASC");
 
             return (LinkedHashSet<Autor>) queryResult(result);
 
@@ -47,7 +47,7 @@ public class AutorManagerImpl implements AutorManager {
         // Crea el statement general.
         try (Statement stmt = con.createStatement()) {
             // Realiza la consulta de la BBDD.
-            ResultSet result = stmt.executeQuery("SELECT * FROM mangas.autor ORDER BY autor.nombre DESC");
+            ResultSet result = stmt.executeQuery("SELECT * FROM autor ORDER BY nombre DESC");
 
             return (LinkedHashSet<Autor>) queryResult(result);
 
@@ -56,8 +56,8 @@ public class AutorManagerImpl implements AutorManager {
 
     @Override
     public Set<Autor> findByName(Connection con, String name) throws SQLException  {
-        try(PreparedStatement prepstm = con.prepareStatement("SELECT * FROM mangas.autor " +
-                "WHERE autor.nombre LIKE ?")){
+        try(PreparedStatement prepstm = con.prepareStatement("SELECT * FROM autor " +
+                "WHERE nombre LIKE ?")){
 
             prepstm.setString(1, "%" + name + "%");
 

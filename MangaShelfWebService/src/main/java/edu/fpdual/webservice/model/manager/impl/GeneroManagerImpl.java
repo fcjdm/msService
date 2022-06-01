@@ -23,13 +23,10 @@ public class GeneroManagerImpl implements GeneroManager {
         // Crea el statement general.
         try (Statement stmt = con.createStatement()) {
             // Realiza la consulta de la BBDD.
-            ResultSet result = stmt.executeQuery("SELECT * FROM mangas.genero");
+            ResultSet result = stmt.executeQuery("SELECT * FROM genero");
 
             return queryResult(result);
 
-        } catch (SQLException e) {
-            e.printStackTrace();
-            return null;
         }
     }
 
@@ -38,13 +35,10 @@ public class GeneroManagerImpl implements GeneroManager {
         // Crea el statement general.
         try (Statement stmt = con.createStatement()) {
             // Realiza la consulta de la BBDD.
-            ResultSet result = stmt.executeQuery("SELECT * FROM mangas.genero ORDER BY genero.genero ASC");
+            ResultSet result = stmt.executeQuery("SELECT * FROM genero ORDER BY genero ASC");
 
             return queryResult(result);
 
-        } catch (SQLException e) {
-            e.printStackTrace();
-            return null;
         }
     }
 
@@ -53,20 +47,17 @@ public class GeneroManagerImpl implements GeneroManager {
         // Crea el statement general.
         try (Statement stmt = con.createStatement()) {
             // Realiza la consulta de la BBDD.
-            ResultSet result = stmt.executeQuery("SELECT * FROM mangas.genero ORDER BY genero.genero DESC");
+            ResultSet result = stmt.executeQuery("SELECT * FROM genero ORDER BY genero DESC");
 
             return queryResult(result);
 
-        } catch (SQLException e) {
-            e.printStackTrace();
-            return null;
         }
     }
 
     @Override
     public Set<Genero> findByName(Connection con, String name) throws SQLException  {
-        try(PreparedStatement prepstm = con.prepareStatement("SELECT * FROM mangas.genero " +
-                "WHERE genero.genero LIKE ?")){
+        try(PreparedStatement prepstm = con.prepareStatement("SELECT * FROM genero " +
+                "WHERE genero LIKE ?")){
 
             prepstm.setString(1, "%" + name + "%");
 

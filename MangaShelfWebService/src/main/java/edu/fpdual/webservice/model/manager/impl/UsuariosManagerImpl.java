@@ -24,8 +24,8 @@ public class UsuariosManagerImpl implements UsuariosManager {
 
     @Override
     public Set<Usuarios> login(Connection con, String email, String password) throws SQLException {
-        try(PreparedStatement prepstm = con.prepareStatement("SELECT usuarios.emailUsuarios FROM mangas.usuarios " +
-                "WHERE usuarios.emailUsuarios = ? AND usuarios.contrasenyaUsuario = ?")){
+        try(PreparedStatement prepstm = con.prepareStatement("SELECT emailUsuarios FROM usuarios " +
+                "WHERE emailUsuarios = ? AND contrasenyaUsuario = ?")){
 
             prepstm.setString(1, email);
             prepstm.setString(1, password);
@@ -46,7 +46,7 @@ public class UsuariosManagerImpl implements UsuariosManager {
 
     @Override
     public int createUser(Connection con, String email, String password) throws SQLException {
-        try(PreparedStatement prepstm = con.prepareStatement("INSERT INTO mangas.usuarios(emailUsuario, contrasenyaUsuario)" +
+        try(PreparedStatement prepstm = con.prepareStatement("INSERT INTO usuarios(emailUsuario, contrasenyaUsuario)" +
                 "VALUES (?,?)")){
             prepstm.setString(1, email);
             prepstm.setString(2, password);
@@ -57,8 +57,8 @@ public class UsuariosManagerImpl implements UsuariosManager {
 
     @Override
     public int deleteUser(Connection con, String email, String password) throws SQLException {
-        try(PreparedStatement prepstm = con.prepareStatement("DELETE FROM mangas.usuarios " +
-                "WHERE usuarios.emailUsuario = ? AND usuarios.contrasenyaUsuario = ?")){
+        try(PreparedStatement prepstm = con.prepareStatement("DELETE FROM usuarios " +
+                "WHERE emailUsuario = ? AND contrasenyaUsuario = ?")){
             prepstm.setString(1, email);
             prepstm.setString(2, password);
 
@@ -68,7 +68,7 @@ public class UsuariosManagerImpl implements UsuariosManager {
 
     @Override
     public int changePassword(Connection con, String email, String oldPassword, String newPassword) throws SQLException {
-        try(PreparedStatement prepstm = con.prepareStatement("UPDATE mangas.usuarios " +
+        try(PreparedStatement prepstm = con.prepareStatement("UPDATE usuarios " +
                 "SET contrasenyaUsuario = ? WHERE emailUsuario = ? AND contrasenyaUsuario = ?")){
             prepstm.setString(1, newPassword);
             prepstm.setString(2, email);

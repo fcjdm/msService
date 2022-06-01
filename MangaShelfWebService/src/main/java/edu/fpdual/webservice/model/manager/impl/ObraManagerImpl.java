@@ -22,13 +22,10 @@ public class ObraManagerImpl implements ObraManager {
         // Crea el statement general.
         try (Statement stmt = con.createStatement()) {
             // Realiza la consulta de la BBDD.
-            ResultSet result = stmt.executeQuery("SELECT * FROM mangas.obra");
+            ResultSet result = stmt.executeQuery("SELECT * FROM obra");
 
             return queryResult(result);
 
-        } catch (SQLException e) {
-            e.printStackTrace();
-            return null;
         }
     }
 
@@ -37,13 +34,10 @@ public class ObraManagerImpl implements ObraManager {
         // Crea el statement general.
         try (Statement stmt = con.createStatement()) {
             // Realiza la consulta de la BBDD.
-            ResultSet result = stmt.executeQuery("SELECT * FROM mangas.obra ORDER BY obra.titulo ASC");
+            ResultSet result = stmt.executeQuery("SELECT * FROM obra ORDER BY titulo ASC");
 
             return queryResult(result);
 
-        } catch (SQLException e) {
-            e.printStackTrace();
-            return null;
         }
     }
 
@@ -52,20 +46,17 @@ public class ObraManagerImpl implements ObraManager {
         // Crea el statement general.
         try (Statement stmt = con.createStatement()) {
             // Realiza la consulta de la BBDD.
-            ResultSet result = stmt.executeQuery("SELECT * FROM mangas.obra ORDER BY obra.titulo DESC");
+            ResultSet result = stmt.executeQuery("SELECT * FROM obra ORDER BY titulo DESC");
 
             return queryResult(result);
 
-        } catch (SQLException e) {
-            e.printStackTrace();
-            return null;
         }
     }
 
     @Override
     public Set<Obra> findByName(Connection con, String name) throws SQLException  {
-        try(PreparedStatement prepstm = con.prepareStatement("SELECT * FROM mangas.obra " +
-                "WHERE obra.titulo LIKE ?")){
+        try(PreparedStatement prepstm = con.prepareStatement("SELECT * FROM obra " +
+                "WHERE titulo LIKE ?")){
 
             prepstm.setString(1, "%" + name + "%");
 

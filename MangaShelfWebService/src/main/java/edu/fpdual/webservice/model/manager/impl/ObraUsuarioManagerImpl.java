@@ -20,8 +20,8 @@ public class ObraUsuarioManagerImpl implements ObraUsuarioManager {
 
     @Override
     public Set<ObraUsuario> findByUser(Connection con, String email) throws SQLException  {
-        try(PreparedStatement prepstm = con.prepareStatement("SELECT * FROM mangas.obra_usuario " +
-                "WHERE obra_usuario.usuario LIKE ?")){
+        try(PreparedStatement prepstm = con.prepareStatement("SELECT * FROM obra_usuario " +
+                "WHERE usuario LIKE ?")){
 
             prepstm.setString(1, "%" + email + "%");
 
@@ -35,7 +35,7 @@ public class ObraUsuarioManagerImpl implements ObraUsuarioManager {
 
         String estado = String.valueOf(Status.LEYENDO);
 
-        try(PreparedStatement prepstm = con.prepareStatement("INSERT INTO mangas.obra_usuario(usuario, obra, capitulosLeidos, estado)" +
+        try(PreparedStatement prepstm = con.prepareStatement("INSERT INTO obra_usuario(usuario, obra, capitulosLeidos, estado)" +
                 "VALUES (?,?,1,?)")){
             prepstm.setString(1, email);
             prepstm.setString(2, obraLeyendo);
@@ -47,8 +47,8 @@ public class ObraUsuarioManagerImpl implements ObraUsuarioManager {
 
     @Override
     public int deleteObraUsuario(Connection con, String email) throws SQLException {
-        try(PreparedStatement prepstm = con.prepareStatement("DELETE FROM mangas.obra_usuario " +
-                "WHERE obra_usuario.usuario = ?")){
+        try(PreparedStatement prepstm = con.prepareStatement("DELETE FROM obra_usuario " +
+                "WHERE usuario = ?")){
             prepstm.setString(1, email);
 
             return prepstm.executeUpdate();
@@ -57,7 +57,7 @@ public class ObraUsuarioManagerImpl implements ObraUsuarioManager {
 
     @Override
     public int sumarCapitulo(Connection con, String email, String obraLeyendo) throws SQLException {
-        try(PreparedStatement prepstm = con.prepareStatement("UPDATE mangas.obra_usuario " +
+        try(PreparedStatement prepstm = con.prepareStatement("UPDATE obra_usuario " +
                 "SET capitulosLeidos = capitulosLeidos + 1 WHERE usuario = ? AND obra = ?")){
             prepstm.setString(1, email);
             prepstm.setString(2, obraLeyendo);
