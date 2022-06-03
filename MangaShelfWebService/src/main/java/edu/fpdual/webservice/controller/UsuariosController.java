@@ -18,6 +18,13 @@ public class UsuariosController {
     }
 
     @GET
+    @Path("/get/{email}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response findUser(@PathParam("email") String email) throws SQLException, ClassNotFoundException {
+        return Response.ok().entity(usuariosService.findUser(email)).build();
+    }
+
+    @GET
     @Path("/login/{email}/{password}")
     @Produces(MediaType.APPLICATION_JSON)
     public Response login(@PathParam("email") String email, @PathParam("password") String password) throws SQLException, ClassNotFoundException {

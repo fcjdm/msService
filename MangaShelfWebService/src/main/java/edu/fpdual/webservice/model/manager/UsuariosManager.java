@@ -16,6 +16,7 @@ import java.util.Set;
  */
 public interface UsuariosManager{
 
+    public Set<Usuarios> findUser (Connection con, String email) throws  SQLException;
     public Set<Usuarios> login (Connection con, String email, String password) throws  SQLException;
     public int createUser (Connection con, String email, String password) throws SQLException;
     public int deleteUser (Connection con, String email, String password) throws SQLException;

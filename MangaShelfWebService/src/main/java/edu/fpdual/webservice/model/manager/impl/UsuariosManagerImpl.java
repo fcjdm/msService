@@ -23,9 +23,30 @@ public class UsuariosManagerImpl implements UsuariosManager {
 
 
     @Override
+    public Set<Usuarios> findUser(Connection con, String email) throws SQLException {
+        try(PreparedStatement prepstm = con.prepareStatement("SELECT * FROM usuarios " +
+                "WHERE emailUsuario = ?")){
+
+            prepstm.setString(1, email);
+
+            ResultSet result = prepstm.executeQuery();
+
+            Set<Usuarios> set = new LinkedHashSet<>();
+            result.beforeFirst();
+            while (result.next()) {
+                Usuarios usuario = new Usuarios(result);
+                set.add(usuario);
+            }
+
+            return set;
+
+        }
+    }
+
+    @Override
     public Set<Usuarios> login(Connection con, String email, String password) throws SQLException {
-        try(PreparedStatement prepstm = con.prepareStatement("SELECT emailUsuarios FROM usuarios " +
-                "WHERE emailUsuarios = ? AND contrasenyaUsuario = ?")){
+        try(PreparedStatement prepstm = con.prepareStatement("SELECT * FROM usuarios " +
+                "WHERE emailUsuario = ? AND contrasenyaUsuario = ?")){
 
             prepstm.setString(1, email);
             prepstm.setString(1, password);

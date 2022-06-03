@@ -17,6 +17,12 @@ public class UsuariosService {
         this.usuariosManager = usuariosManager;
     }
 
+    public Set<Usuarios> findUser (String email) throws  SQLException, ClassNotFoundException{
+        try (Connection con = new MySQLConnector().getMySQLConnection()) {
+            return usuariosManager.findUser(con, email);
+        }
+    }
+
     public Set<Usuarios> login (String email, String password) throws  SQLException, ClassNotFoundException{
         try (Connection con = new MySQLConnector().getMySQLConnection()) {
             return usuariosManager.login(con, email, password);
