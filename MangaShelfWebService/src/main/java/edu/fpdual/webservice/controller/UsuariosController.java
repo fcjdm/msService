@@ -1,11 +1,13 @@
 package edu.fpdual.webservice.controller;
 
+import edu.fpdual.webservice.model.dao.Usuarios;
 import edu.fpdual.webservice.model.manager.impl.*;
 import edu.fpdual.webservice.service.*;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 
+import javax.print.attribute.standard.Media;
 import java.sql.SQLException;
 
 @Path("/usuarios")
@@ -18,39 +20,48 @@ public class UsuariosController {
     }
 
     @GET
-    @Path("/get/{email}")
+    @Path("/{email}")
     @Produces(MediaType.APPLICATION_JSON)
     public Response findUser(@PathParam("email") String email) throws SQLException, ClassNotFoundException {
         return Response.ok().entity(usuariosService.findUser(email)).build();
     }
 
-    @GET
-    @Path("/login/{email}/{password}")
+    @PATCH
+    @Path("/login")
+    @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public Response login(@PathParam("email") String email, @PathParam("password") String password) throws SQLException, ClassNotFoundException {
-            return Response.ok().entity(usuariosService.login(email, password)).build();
+    public Response login(Usuarios newUser) throws SQLException, ClassNotFoundException {
+        return Response.ok().entity(usuariosService.login(newUser.getEmailUsuario(), newUser.getContrasenyaUsuario())).build();
     }
 
     @POST
-    @Path("/create/{email}/{password}")
+    @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public void createUser(@PathParam("email") String email, @PathParam("password") String password){
+    public Response createUser(Usuarios newUser) {
         try {
-            int creado = usuariosService.createUser(email, password);
-            if(creado != 1){
-                System.out.println(Response.status(500).entity("Internal Error During Creating The User").build());
+            Usuarios user = usuariosService.findUser(newUser.getEmailUsuario());
+
+            if (user == null) {
+                usuariosService.createUser(newUser.getEmailUsuario(), newUser.getContrasenyaUsuario());
+                return Response.ok().entity(usuariosService.findUser(newUser.getEmailUsuario())).build();
+            } else {
+                return Response.status(500).entity("User already exists").build();
             }
-        } catch (SQLException | ClassNotFoundException e) {
-            System.out.println(Response.status(500).entity("Internal Error During DB Interaction").build());
+
+        }catch (SQLException | ClassNotFoundException e) {
+            return Response.status(500).entity("Internal Error During DB Interaction").build();
         }
+
+
+
     }
 
     @DELETE
-    @Path("/delete/{email}/{password}")
+    @Path("/{email}")
     @Produces(MediaType.APPLICATION_JSON)
-    public void deleteUser(@PathParam("email") String email, @PathParam("password") String password) {
+    public void deleteUser(@PathParam("email") String email) {
         try {
-            if (usuariosService.deleteUser(email, password) != 1) {
+            if (usuariosService.deleteUser(email) != 1) {
                 System.out.println(Response.status(304).entity("User Was Not Deleted").build());
             }
         } catch (SQLException | ClassNotFoundException e) {
@@ -60,11 +71,11 @@ public class UsuariosController {
     }
 
     @PUT
-    @Path("/update/{email}/{oldpassword}/{newpassword}")
+    @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public void changePassword(@PathParam("email") String email, @PathParam("oldpassword") String oldPassword, @PathParam("newpassword") String newPassword){
+    public void changePassword(Usuarios newUser){
         try {
-            if(usuariosService.changePassword(email, oldPassword, newPassword) != 1){
+            if(usuariosService.changePassword(newUser.getEmailUsuario(), newUser.getContrasenyaUsuario()) != 1){
                 System.out.println(Response.status(500).entity("Internal Error During Password Change").build());
             }
         } catch (SQLException | ClassNotFoundException e) {

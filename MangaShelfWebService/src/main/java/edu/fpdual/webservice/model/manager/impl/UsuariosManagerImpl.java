@@ -23,7 +23,7 @@ public class UsuariosManagerImpl implements UsuariosManager {
 
 
     @Override
-    public Set<Usuarios> findUser(Connection con, String email) throws SQLException {
+    public Usuarios findUser(Connection con, String email) throws SQLException {
         try(PreparedStatement prepstm = con.prepareStatement("SELECT * FROM usuarios " +
                 "WHERE emailUsuario = ?")){
 
@@ -31,36 +31,28 @@ public class UsuariosManagerImpl implements UsuariosManager {
 
             ResultSet result = prepstm.executeQuery();
 
-            Set<Usuarios> set = new LinkedHashSet<>();
             result.beforeFirst();
-            while (result.next()) {
-                Usuarios usuario = new Usuarios(result);
-                set.add(usuario);
-            }
+            result.next();
 
-            return set;
+            return new Usuarios(result);
 
         }
     }
 
     @Override
-    public Set<Usuarios> login(Connection con, String email, String password) throws SQLException {
+    public Usuarios login(Connection con, String email, String password) throws SQLException {
         try(PreparedStatement prepstm = con.prepareStatement("SELECT * FROM usuarios " +
                 "WHERE emailUsuario = ? AND contrasenyaUsuario = ?")){
 
             prepstm.setString(1, email);
-            prepstm.setString(1, password);
+            prepstm.setString(2, password);
 
             ResultSet result = prepstm.executeQuery();
 
-            Set<Usuarios> set = new LinkedHashSet<>();
             result.beforeFirst();
-            while (result.next()) {
-                Usuarios usuario = new Usuarios(result);
-                set.add(usuario);
-            }
+            result.next();
 
-            return set;
+            return new Usuarios(result);
 
         }
     }
@@ -77,23 +69,21 @@ public class UsuariosManagerImpl implements UsuariosManager {
     }
 
     @Override
-    public int deleteUser(Connection con, String email, String password) throws SQLException {
+    public int deleteUser(Connection con, String email) throws SQLException {
         try(PreparedStatement prepstm = con.prepareStatement("DELETE FROM usuarios " +
-                "WHERE emailUsuario = ? AND contrasenyaUsuario = ?")){
+                "WHERE emailUsuario = ?")){
             prepstm.setString(1, email);
-            prepstm.setString(2, password);
 
             return prepstm.executeUpdate();
         }
     }
 
     @Override
-    public int changePassword(Connection con, String email, String oldPassword, String newPassword) throws SQLException {
+    public int changePassword(Connection con, String email, String newPassword) throws SQLException {
         try(PreparedStatement prepstm = con.prepareStatement("UPDATE usuarios " +
-                "SET contrasenyaUsuario = ? WHERE emailUsuario = ? AND contrasenyaUsuario = ?")){
+                "SET contrasenyaUsuario = ? WHERE emailUsuario = ?")){
             prepstm.setString(1, newPassword);
             prepstm.setString(2, email);
-            prepstm.setString(3, oldPassword);
 
             return prepstm.executeUpdate();
         }

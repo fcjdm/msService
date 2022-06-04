@@ -79,10 +79,9 @@ class UsuariosManagerImplTest {
             }
         });
 
-        Set<Usuarios> usuariosSet = usuariosManager.login(connection,"","");
+        Usuarios usuarios = usuariosManager.login(connection,"","");
 
-        MatcherAssert.assertThat(usuariosSet, Matchers.hasSize(1));
-        MatcherAssert.assertThat(usuariosSet.iterator().next(), Matchers.is(expectedUsuarios));
+        MatcherAssert.assertThat(usuarios, Matchers.is(expectedUsuarios));
 
     }
 
