@@ -31,10 +31,17 @@ public class UsuariosManagerImpl implements UsuariosManager {
 
             ResultSet result = prepstm.executeQuery();
 
-            result.beforeFirst();
-            result.next();
 
-            return new Usuarios(result);
+            if(result.next()){
+                result.beforeFirst();
+                result.next();
+                return new Usuarios(result);
+            } else{
+                return null;
+            }
+
+
+
 
         }
     }
@@ -49,10 +56,13 @@ public class UsuariosManagerImpl implements UsuariosManager {
 
             ResultSet result = prepstm.executeQuery();
 
-            result.beforeFirst();
-            result.next();
-
-            return new Usuarios(result);
+            if(result.next()){
+                result.beforeFirst();
+                result.next();
+                return new Usuarios(result);
+            } else{
+                return null;
+            }
 
         }
     }

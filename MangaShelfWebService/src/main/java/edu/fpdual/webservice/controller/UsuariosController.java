@@ -27,29 +27,39 @@ public class UsuariosController {
     }
 
     @PATCH
-    @Path("/login")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public Response login(Usuarios newUser) throws SQLException, ClassNotFoundException {
-        return Response.ok().entity(usuariosService.login(newUser.getEmailUsuario(), newUser.getContrasenyaUsuario())).build();
+    public Response login(Usuarios newUser) {
+        try{
+            Usuarios user = usuariosService.login(newUser.getEmailUsuario(), newUser.getContrasenyaUsuario());
+            if(user != null){
+                return Response.ok().entity(user).build();
+            }else{
+                return Response.status(404).entity("Email o contraseña erronea").build();
+            }
+
+        }catch (SQLException | ClassNotFoundException e) {
+            return Response.status(500).entity("Internal Error During DB Interaction").build();
+        }
+
     }
 
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public Response createUser(Usuarios newUser) {
+    public Response createUser(Usuarios newUser) throws SQLException, ClassNotFoundException {
         try {
             Usuarios user = usuariosService.findUser(newUser.getEmailUsuario());
 
             if (user == null) {
                 usuariosService.createUser(newUser.getEmailUsuario(), newUser.getContrasenyaUsuario());
                 return Response.ok().entity(usuariosService.findUser(newUser.getEmailUsuario())).build();
-            } else {
+           } else {
                 return Response.status(500).entity("User already exists").build();
             }
 
         }catch (SQLException | ClassNotFoundException e) {
-            return Response.status(500).entity("Internal Error During DB Interaction").build();
+            return Response.status(400).entity("Internal Error During DB Interaction").build();
         }
 
 
