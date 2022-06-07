@@ -68,14 +68,14 @@ public class UsuariosController {
 
     @DELETE
     @Path("/{email}")
-    @Produces(MediaType.APPLICATION_JSON)
-    public void deleteUser(@PathParam("email") String email) {
+    @Produces(MediaType.APPLICATION_XML)
+    public Response deleteUser(@PathParam("email") String email) {
         try {
-            if (usuariosService.deleteUser(email) != 1) {
-                System.out.println(Response.status(304).entity("User Was Not Deleted").build());
-            }
-        } catch (SQLException | ClassNotFoundException e) {
-            System.out.println(Response.status(500).entity("Internal Error During DB Interaction").build());
+            usuariosService.deleteUser(email);
+            return Response.ok().build();
+
+        }catch (SQLException | ClassNotFoundException e) {
+            return Response.status(400).entity("Internal Error During DB Interaction").build();
         }
 
     }
