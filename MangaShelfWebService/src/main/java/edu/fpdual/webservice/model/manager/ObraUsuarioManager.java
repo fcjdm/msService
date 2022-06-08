@@ -18,9 +18,10 @@ import java.util.Set;
 public interface ObraUsuarioManager{
 
     public Set<ObraUsuario> findByUser (Connection con, String email) throws SQLException;
-    public int createObraUsuario (Connection con, String email, String obraLeyendo) throws SQLException;
+    public int addObra (Connection con, String email, String obraLeyendo) throws SQLException;
     public int deleteObraUsuario (Connection con, String email) throws SQLException;
     public int sumarCapitulo (Connection con, String email, String obraLeyendo) throws SQLException;
     public Set<ObraUsuario> queryResult (ResultSet result) throws SQLException;
+    public ObraUsuario findByID (Connection con, String email, String obra) throws SQLException;
 
 }

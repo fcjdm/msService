@@ -23,17 +23,6 @@ public class ObraService {
         }
     }
 
-    public Set<Obra> findByOrderAsc() throws SQLException, ClassNotFoundException {
-        try (Connection con = new MySQLConnector().getMySQLConnection()) {
-            return obraManager.findByOrderAsc(con);
-        }
-    }
-
-    public Set<Obra> findByOrderDesc() throws SQLException, ClassNotFoundException {
-        try (Connection con = new MySQLConnector().getMySQLConnection()) {
-            return obraManager.findByOrderDesc(con);
-        }
-    }
 
     public Set<Obra> findByName(String nombre) throws SQLException, ClassNotFoundException {
         try (Connection con = new MySQLConnector().getMySQLConnection()) {

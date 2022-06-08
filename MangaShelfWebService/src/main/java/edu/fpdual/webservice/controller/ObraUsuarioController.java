@@ -1,5 +1,8 @@
 package edu.fpdual.webservice.controller;
 
+import edu.fpdual.webservice.model.dao.Obra;
+import edu.fpdual.webservice.model.dao.ObraUsuario;
+import edu.fpdual.webservice.model.dao.Usuarios;
 import edu.fpdual.webservice.model.manager.impl.ObraUsuarioManagerImpl;
 import edu.fpdual.webservice.service.ObraUsuarioService;
 import jakarta.ws.rs.*;
@@ -17,24 +20,40 @@ public class ObraUsuarioController {
         this.obraUsuarioService = new ObraUsuarioService(new ObraUsuarioManagerImpl());
     }
 
+
     @GET
-    @Path("/get/{email}")
+    @Path("/get/{email}/{obra}")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response findByUser(@PathParam("email") String email) throws SQLException, ClassNotFoundException{
-        return Response.ok().entity(obraUsuarioService.findByUser(email)).build();
+    public Response findByUser(@PathParam("email") String email, @PathParam("obra") String obra) throws SQLException, ClassNotFoundException{
+        try{
+            ObraUsuario obus = obraUsuarioService.findByID(email, obra);
+
+            if(obus != null){
+                return Response.ok().entity(obus).build();
+            }else{
+                return Response.status(404).entity("Not found").build();
+            }
+
+        }catch (SQLException | ClassNotFoundException e){
+            return Response.status(400).entity("Internal Error During DB Interaction").build();
+        }
     }
 
     @POST
-    @Path("/create/{email}/{obraleyendo}")
+    @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public void createUser(@PathParam("email") String email, @PathParam("obraleyendo") String obraLeyendo){
+    public Response addObra(ObraUsuario obus) throws SQLException, ClassNotFoundException {
         try {
-            int creado = obraUsuarioService.createObraUsuario(email, obraLeyendo);
-            if(creado != 1){
-                System.out.println(Response.status(500).entity("Internal Error During Creating The User").build());
+            ObraUsuario obraUsuario = obraUsuarioService.findByID(obus.getUsuario(), obus.getUsuario());
+
+            if(obraUsuario == null){
+                obraUsuarioService.addObra(obus.getUsuario(), obus.getObra());
+                return Response.ok().entity(obraUsuarioService.findByID(obus.getUsuario(), obus.getUsuario())).build();
+            }else{
+                return Response.status(500).entity("Not found").build();
             }
         } catch (SQLException | ClassNotFoundException e) {
-            System.out.println(Response.status(500).entity("Internal Error During DB Interaction").build());
+            return Response.status(400).entity("Internal Error During DB Interaction").build();
         }
     }
 

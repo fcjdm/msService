@@ -13,8 +13,6 @@ public interface Manager<T> {
      * @return a {@link Set} of {@link T}
      */
     public Set<T> findAll(Connection con) throws SQLException;
-    public Set<T> findByOrderAsc (Connection con) throws SQLException;
-    public Set<T> findByOrderDesc (Connection con) throws SQLException;
     public Set<T> findByName (Connection con, String name) throws SQLException;
     public Set<T> queryResult (ResultSet result) throws SQLException;
 

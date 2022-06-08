@@ -23,17 +23,6 @@ public class AutorService {
         }
     }
 
-    public Set<Autor> findByOrderAsc() throws SQLException, ClassNotFoundException {
-        try (Connection con = new MySQLConnector().getMySQLConnection()) {
-            return autorManager.findByOrderAsc(con);
-        }
-    }
-
-    public Set<Autor> findByOrderDesc() throws SQLException, ClassNotFoundException {
-        try (Connection con = new MySQLConnector().getMySQLConnection()) {
-            return autorManager.findByOrderDesc(con);
-        }
-    }
 
     public Set<Autor> findByName(String nombre) throws SQLException, ClassNotFoundException {
         try (Connection con = new MySQLConnector().getMySQLConnection()) {

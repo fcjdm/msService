@@ -2,6 +2,7 @@ package edu.fpdual.webservice.model.manager.impl;
 
 import edu.fpdual.webservice.Status;
 import edu.fpdual.webservice.model.dao.ObraUsuario;
+import edu.fpdual.webservice.model.dao.Usuarios;
 import edu.fpdual.webservice.model.manager.ObraUsuarioManager;
 
 import java.sql.*;
@@ -31,16 +32,12 @@ public class ObraUsuarioManagerImpl implements ObraUsuarioManager {
     }
 
     @Override
-    public int createObraUsuario(Connection con, String email, String obraLeyendo) throws SQLException {
-
-        String estado = String.valueOf(Status.LEYENDO);
+    public int addObra(Connection con, String email, String obraLeyendo) throws SQLException {
 
         try(PreparedStatement prepstm = con.prepareStatement("INSERT INTO obra_usuario(usuario, obra, capitulosLeidos, estado) " +
-                "VALUES (?,?,1,?)")){
+                "VALUES (?,?,0,'LEYENDO')")){
             prepstm.setString(1, email);
             prepstm.setString(2, obraLeyendo);
-            prepstm.setString(3, estado);
-
             return prepstm.executeUpdate();
         }
     }
@@ -76,6 +73,26 @@ public class ObraUsuarioManagerImpl implements ObraUsuarioManager {
         }
 
         return set;
+    }
+
+    @Override
+    public ObraUsuario findByID(Connection con, String email, String obra) throws SQLException {
+        try(PreparedStatement prepstm = con.prepareStatement("SELECT * FROM obra_usuario " +
+                "WHERE usuario LIKE ? AND obra LIKE ?")){
+
+            prepstm.setString(1, email);
+            prepstm.setString(2, obra);
+
+            ResultSet result = prepstm.executeQuery();
+
+            if(result.next()){
+                result.beforeFirst();
+                result.next();
+                return new ObraUsuario(result);
+            } else{
+                return null;
+            }
+        }
     }
 
 }

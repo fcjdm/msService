@@ -23,9 +23,9 @@ public class ObraUsuarioService {
         }
     }
 
-    public int createObraUsuario(String email, String obraLeyendo) throws SQLException, ClassNotFoundException {
+    public int addObra(String email, String obraLeyendo) throws SQLException, ClassNotFoundException {
         try (Connection con = new MySQLConnector().getMySQLConnection()) {
-            return obraUsuarioManager.createObraUsuario(con, email, obraLeyendo);
+            return obraUsuarioManager.addObra(con, email, obraLeyendo);
         }
     }
 
@@ -38,6 +38,12 @@ public class ObraUsuarioService {
     public int sumarCapitulo(String email, String obraLeyendo) throws SQLException, ClassNotFoundException {
         try (Connection con = new MySQLConnector().getMySQLConnection()) {
             return obraUsuarioManager.sumarCapitulo(con, email, obraLeyendo);
+        }
+    }
+
+    public ObraUsuario findByID(String email, String obra) throws SQLException, ClassNotFoundException {
+        try (Connection con = new MySQLConnector().getMySQLConnection()) {
+            return obraUsuarioManager.findByID(con, email, obra);
         }
     }
 

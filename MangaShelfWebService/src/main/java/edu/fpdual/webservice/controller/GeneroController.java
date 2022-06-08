@@ -1,5 +1,7 @@
 package edu.fpdual.webservice.controller;
 
+import edu.fpdual.webservice.model.dao.Autor;
+import edu.fpdual.webservice.model.dao.Genero;
 import edu.fpdual.webservice.model.manager.impl.GeneroManagerImpl;
 import edu.fpdual.webservice.service.GeneroService;
 import jakarta.ws.rs.*;
@@ -7,6 +9,7 @@ import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 
 import java.sql.SQLException;
+import java.util.Set;
 
 @Path("/genero")
 public class GeneroController {
@@ -24,29 +27,19 @@ public class GeneroController {
         return Response.ok().entity(generoService.findAll()).build();
     }
 
-    @GET
-    @Path("/get/asc")
-    @Produces(MediaType.APPLICATION_JSON)
-    public Response findByOrderAsc() throws SQLException, ClassNotFoundException{
-        return Response.ok().entity(generoService.findByOrderAsc()).build();
-    }
-
-    @GET
-    @Path("/get/desc")
-    @Produces(MediaType.APPLICATION_JSON)
-    public Response findByOrderDesc() throws SQLException, ClassNotFoundException{
-        return Response.ok().entity(generoService.findByOrderDesc()).build();
-    }
 
     @GET
     @Path("/get/{name}")
     @Produces(MediaType.APPLICATION_JSON)
     public Response findByName(@PathParam("name") String name) {
         try {
-            if (name == null) {
-                return Response.status(400).entity("Incorrect Parameters").build();
+            Set<Genero> setGeneros= generoService.findByName(name);
+
+            if (setGeneros != null) {
+                return Response.ok().entity(setGeneros).build();
             } else {
-                return Response.ok().entity(generoService.findByName(name)).build();
+                return Response.status(404).entity("Not found").build();
+
             }
         } catch (SQLException | ClassNotFoundException e) {
             return Response.status(500).entity("Internal Error During DB Interaction").build();

@@ -29,29 +29,6 @@ public class ObraManagerImpl implements ObraManager {
         }
     }
 
-    @Override
-    public Set<Obra> findByOrderAsc(Connection con)throws SQLException {
-
-        try (Statement stmt = con.createStatement()) {
-
-            ResultSet result = stmt.executeQuery("SELECT * FROM obra ORDER BY titulo ASC");
-
-            return queryResult(result);
-
-        }
-    }
-
-    @Override
-    public Set<Obra> findByOrderDesc(Connection con) throws SQLException {
-
-        try (Statement stmt = con.createStatement()) {
-
-            ResultSet result = stmt.executeQuery("SELECT * FROM obra ORDER BY titulo DESC");
-
-            return queryResult(result);
-
-        }
-    }
 
     @Override
     public Set<Obra> findByName(Connection con, String name) throws SQLException  {
@@ -61,7 +38,12 @@ public class ObraManagerImpl implements ObraManager {
             prepstm.setString(1, "%" + name + "%");
 
             ResultSet result = prepstm.executeQuery();
-            return queryResult(result);
+
+            if(result.next()){
+                return queryResult(result);
+            }else{
+                return null;
+            }
         }
     }
 

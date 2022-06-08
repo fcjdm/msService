@@ -23,17 +23,6 @@ public class GeneroService {
         }
     }
 
-    public Set<Genero> findByOrderAsc() throws SQLException, ClassNotFoundException {
-        try (Connection con = new MySQLConnector().getMySQLConnection()) {
-            return generoManager.findByOrderAsc(con);
-        }
-    }
-
-    public Set<Genero> findByOrderDesc() throws SQLException, ClassNotFoundException {
-        try (Connection con = new MySQLConnector().getMySQLConnection()) {
-            return generoManager.findByOrderDesc(con);
-        }
-    }
 
     public Set<Genero> findByName(String nombre) throws SQLException, ClassNotFoundException {
         try (Connection con = new MySQLConnector().getMySQLConnection()) {

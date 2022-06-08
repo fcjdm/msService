@@ -25,34 +25,15 @@ public class GeneroManagerImpl implements GeneroManager {
 
             ResultSet result = stmt.executeQuery("SELECT * FROM genero");
 
-            return queryResult(result);
+            if(result.next()){
+                return queryResult(result);
+            }else{
+                return null;
+            }
 
         }
     }
 
-    @Override
-    public Set<Genero> findByOrderAsc(Connection con)throws SQLException {
-
-        try (Statement stmt = con.createStatement()) {
-
-            ResultSet result = stmt.executeQuery("SELECT * FROM genero ORDER BY genero ASC");
-
-            return queryResult(result);
-
-        }
-    }
-
-    @Override
-    public Set<Genero> findByOrderDesc(Connection con) throws SQLException {
-
-        try (Statement stmt = con.createStatement()) {
-
-            ResultSet result = stmt.executeQuery("SELECT * FROM genero ORDER BY genero DESC");
-
-            return queryResult(result);
-
-        }
-    }
 
     @Override
     public Set<Genero> findByName(Connection con, String name) throws SQLException  {

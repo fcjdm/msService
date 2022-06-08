@@ -31,30 +31,6 @@ public class AutorManagerImpl implements AutorManager {
     }
 
     @Override
-    public Set<Autor> findByOrderAsc(Connection con)throws SQLException {
-
-        try (Statement stmt = con.createStatement()) {
-
-            ResultSet result = stmt.executeQuery("SELECT * FROM autor ORDER BY nombre ASC");
-
-            return queryResult(result);
-
-        }
-    }
-
-    @Override
-    public Set<Autor> findByOrderDesc(Connection con) throws SQLException {
-
-        try (Statement stmt = con.createStatement()) {
-
-            ResultSet result = stmt.executeQuery("SELECT * FROM autor ORDER BY nombre DESC");
-
-            return queryResult(result);
-
-        }
-    }
-
-    @Override
     public Set<Autor> findByName(Connection con, String name) throws SQLException  {
         try(PreparedStatement prepstm = con.prepareStatement("SELECT * FROM autor " +
                 "WHERE nombre LIKE ?")){
@@ -62,7 +38,13 @@ public class AutorManagerImpl implements AutorManager {
             prepstm.setString(1, "%" + name + "%");
 
             ResultSet result = prepstm.executeQuery();
-            return queryResult(result);
+
+            if(result.next()){
+                return queryResult(result);
+            }else{
+                return null;
+            }
+
         }
     }
 
