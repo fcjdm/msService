@@ -69,7 +69,7 @@ public class UsuariosManagerImpl implements UsuariosManager {
 
     @Override
     public int createUser(Connection con, String email, String password) throws SQLException {
-        try(PreparedStatement prepstm = con.prepareStatement("INSERT INTO usuarios(emailUsuario, contrasenyaUsuario)" +
+        try(PreparedStatement prepstm = con.prepareStatement("INSERT INTO usuarios(emailUsuario, contrasenyaUsuario) " +
                 "VALUES (?,?)")){
             prepstm.setString(1, email);
             prepstm.setString(2, password);

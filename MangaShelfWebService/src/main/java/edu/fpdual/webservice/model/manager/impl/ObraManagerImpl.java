@@ -19,9 +19,9 @@ public class ObraManagerImpl implements ObraManager {
 
     @Override
     public Set<Obra> findAll(Connection con) throws SQLException {
-        // Crea el statement general.
+
         try (Statement stmt = con.createStatement()) {
-            // Realiza la consulta de la BBDD.
+
             ResultSet result = stmt.executeQuery("SELECT * FROM obra");
 
             return queryResult(result);
@@ -31,9 +31,9 @@ public class ObraManagerImpl implements ObraManager {
 
     @Override
     public Set<Obra> findByOrderAsc(Connection con)throws SQLException {
-        // Crea el statement general.
+
         try (Statement stmt = con.createStatement()) {
-            // Realiza la consulta de la BBDD.
+
             ResultSet result = stmt.executeQuery("SELECT * FROM obra ORDER BY titulo ASC");
 
             return queryResult(result);
@@ -43,9 +43,9 @@ public class ObraManagerImpl implements ObraManager {
 
     @Override
     public Set<Obra> findByOrderDesc(Connection con) throws SQLException {
-        // Crea el statement general.
+
         try (Statement stmt = con.createStatement()) {
-            // Realiza la consulta de la BBDD.
+
             ResultSet result = stmt.executeQuery("SELECT * FROM obra ORDER BY titulo DESC");
 
             return queryResult(result);

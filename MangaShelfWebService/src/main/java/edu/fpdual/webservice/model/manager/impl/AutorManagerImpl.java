@@ -20,9 +20,9 @@ public class AutorManagerImpl implements AutorManager {
 
     @Override
     public Set<Autor> findAll(Connection con) throws SQLException {
-        // Crea el statement general.
+
         try (Statement stmt = con.createStatement()) {
-            // Realiza la consulta de la BBDD.
+
             ResultSet result = stmt.executeQuery("SELECT * FROM autor");
 
             return queryResult(result);
@@ -32,24 +32,24 @@ public class AutorManagerImpl implements AutorManager {
 
     @Override
     public Set<Autor> findByOrderAsc(Connection con)throws SQLException {
-        // Crea el statement general.
+
         try (Statement stmt = con.createStatement()) {
-            // Realiza la consulta de la BBDD.
+
             ResultSet result = stmt.executeQuery("SELECT * FROM autor ORDER BY nombre ASC");
 
-            return (LinkedHashSet<Autor>) queryResult(result);
+            return queryResult(result);
 
         }
     }
 
     @Override
     public Set<Autor> findByOrderDesc(Connection con) throws SQLException {
-        // Crea el statement general.
+
         try (Statement stmt = con.createStatement()) {
-            // Realiza la consulta de la BBDD.
+
             ResultSet result = stmt.executeQuery("SELECT * FROM autor ORDER BY nombre DESC");
 
-            return (LinkedHashSet<Autor>) queryResult(result);
+            return queryResult(result);
 
         }
     }

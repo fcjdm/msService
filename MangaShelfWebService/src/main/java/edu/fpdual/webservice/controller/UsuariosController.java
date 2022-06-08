@@ -7,7 +7,6 @@ import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 
-import javax.print.attribute.standard.Media;
 import java.sql.SQLException;
 
 @Path("/usuarios")
@@ -70,11 +69,9 @@ public class UsuariosController {
                 return Response.status(500).entity("User already exists").build();
             }
 
-        }catch (SQLException | ClassNotFoundException e) {
+        } catch (SQLException | ClassNotFoundException e) {
             return Response.status(400).entity("Internal Error During DB Interaction").build();
         }
-
-
 
     }
 

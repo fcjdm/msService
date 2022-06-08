@@ -45,7 +45,7 @@ class ObraManagerImplTest {
     @Test
     void findAll_ok() throws SQLException {
 
-        Obra expectedObra = new Obra("Assassination Classroom", 2012, "2016", "187");
+        Obra expectedObra = new Obra("AssassinationClassroom","Assassination Classroom", 2012, "2016", "187");
 
         when(connection.createStatement()).thenReturn(statement);
         when(statement.executeQuery(any())).thenReturn(resultSet);
@@ -64,7 +64,7 @@ class ObraManagerImplTest {
             }
         });
 
-        doReturn(expectedObra.getTitulo()).when(resultSet).getString(any());
+        doReturn(expectedObra.getId()).when(resultSet).getString(any());
         when(resultSet.getInt(any())).thenAnswer(new Answer<Integer>() {
 
             @Override
@@ -83,7 +83,9 @@ class ObraManagerImplTest {
             @Override
             public String answer(InvocationOnMock invocationOnMock) throws Throwable {
 
-                if (invocationOnMock.getArgument(0).equals("Titulo")){
+                if (invocationOnMock.getArgument(0).equals("Id")){
+                    return expectedObra.getId();
+                } else if (invocationOnMock.getArgument(0).equals("Titulo")) {
                     return expectedObra.getTitulo();
                 } else if (invocationOnMock.getArgument(0).equals("AnyoTermino")) {
                     return expectedObra.getAnyoTermino();
@@ -106,7 +108,7 @@ class ObraManagerImplTest {
     @Test
     void findByOrderAsc_ok() throws SQLException {
 
-        Obra expectedObra = new Obra("Assassination Classroom", 2012, "2016", "187");
+        Obra expectedObra = new Obra("AssassinationClassroom", "Assassination Classroom", 2012, "2016", "187");
 
         when(connection.createStatement()).thenReturn(statement);
         when(statement.executeQuery(any())).thenReturn(resultSet);
@@ -125,7 +127,7 @@ class ObraManagerImplTest {
             }
         });
 
-        doReturn(expectedObra.getTitulo()).when(resultSet).getString(any());
+        doReturn(expectedObra.getId()).when(resultSet).getString(any());
         when(resultSet.getInt(any())).thenAnswer(new Answer<Integer>() {
 
             @Override
@@ -144,7 +146,9 @@ class ObraManagerImplTest {
             @Override
             public String answer(InvocationOnMock invocationOnMock) throws Throwable {
 
-                if (invocationOnMock.getArgument(0).equals("Titulo")){
+                if (invocationOnMock.getArgument(0).equals("Id")){
+                    return expectedObra.getId();
+                } else if (invocationOnMock.getArgument(0).equals("Titulo")) {
                     return expectedObra.getTitulo();
                 } else if (invocationOnMock.getArgument(0).equals("AnyoTermino")) {
                     return expectedObra.getAnyoTermino();
@@ -167,7 +171,7 @@ class ObraManagerImplTest {
     @Test
     void findByOrderDesc_ok() throws SQLException {
 
-        Obra expectedObra = new Obra("Assassination Classroom", 2012, "2016", "187");
+        Obra expectedObra = new Obra("AssassinationClassroom", "Assassination Classroom", 2012, "2016", "187");
 
         when(connection.createStatement()).thenReturn(statement);
         when(statement.executeQuery(any())).thenReturn(resultSet);
@@ -186,7 +190,7 @@ class ObraManagerImplTest {
             }
         });
 
-        doReturn(expectedObra.getTitulo()).when(resultSet).getString(any());
+        doReturn(expectedObra.getId()).when(resultSet).getString(any());
         when(resultSet.getInt(any())).thenAnswer(new Answer<Integer>() {
 
             @Override
@@ -205,7 +209,9 @@ class ObraManagerImplTest {
             @Override
             public String answer(InvocationOnMock invocationOnMock) throws Throwable {
 
-                if (invocationOnMock.getArgument(0).equals("Titulo")){
+                if (invocationOnMock.getArgument(0).equals("Id")){
+                    return expectedObra.getId();
+                } else if (invocationOnMock.getArgument(0).equals("Titulo")) {
                     return expectedObra.getTitulo();
                 } else if (invocationOnMock.getArgument(0).equals("AnyoTermino")) {
                     return expectedObra.getAnyoTermino();
@@ -228,7 +234,7 @@ class ObraManagerImplTest {
     @Test
     void findByName_ok() throws SQLException {
 
-        Obra expectedObra = new Obra("Assassination Classroom", 2012, "2016", "187");
+        Obra expectedObra = new Obra("AssassinationClassroom", "Assassination Classroom", 2012, "2016", "187");
 
         when(connection.prepareStatement(any())).thenReturn(preparedStatement);
         when(preparedStatement.executeQuery()).thenReturn(resultSet);
@@ -246,7 +252,7 @@ class ObraManagerImplTest {
                 }
             }
         });
-        doReturn(expectedObra.getTitulo()).when(resultSet).getString(any());
+        doReturn(expectedObra.getId()).when(resultSet).getString(any());
         when(resultSet.getInt(any())).thenAnswer(new Answer<Integer>() {
 
             @Override
@@ -265,7 +271,9 @@ class ObraManagerImplTest {
             @Override
             public String answer(InvocationOnMock invocationOnMock) throws Throwable {
 
-                if (invocationOnMock.getArgument(0).equals("Titulo")){
+                if (invocationOnMock.getArgument(0).equals("Id")){
+                    return expectedObra.getId();
+                } else if (invocationOnMock.getArgument(0).equals("Titulo")) {
                     return expectedObra.getTitulo();
                 } else if (invocationOnMock.getArgument(0).equals("AnyoTermino")) {
                     return expectedObra.getAnyoTermino();

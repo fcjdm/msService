@@ -35,7 +35,7 @@ public class ObraUsuarioManagerImpl implements ObraUsuarioManager {
 
         String estado = String.valueOf(Status.LEYENDO);
 
-        try(PreparedStatement prepstm = con.prepareStatement("INSERT INTO obra_usuario(usuario, obra, capitulosLeidos, estado)" +
+        try(PreparedStatement prepstm = con.prepareStatement("INSERT INTO obra_usuario(usuario, obra, capitulosLeidos, estado) " +
                 "VALUES (?,?,1,?)")){
             prepstm.setString(1, email);
             prepstm.setString(2, obraLeyendo);

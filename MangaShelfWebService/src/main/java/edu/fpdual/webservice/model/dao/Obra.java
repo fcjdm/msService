@@ -14,14 +14,14 @@ import java.sql.SQLException;
 @Builder
 public class Obra {
 
+    private String id;
     private String titulo;
     private int anyoPublicacion;
-    //anyoTermino values: int, "En publicacion"
     private String anyoTermino;
-    //capitulosTotales values: int, "En publicacion"
     private String capitulosTotales;
 
     public Obra(ResultSet result) throws SQLException {
+        setId(result.getString("Id"));
         setTitulo(result.getString("Titulo"));
         setAnyoPublicacion(result.getInt("AnyoPublicacion"));
         setAnyoTermino(result.getString("AnyoTermino"));

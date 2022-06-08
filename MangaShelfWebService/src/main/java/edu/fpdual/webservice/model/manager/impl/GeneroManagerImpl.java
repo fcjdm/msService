@@ -20,9 +20,9 @@ public class GeneroManagerImpl implements GeneroManager {
 
     @Override
     public Set<Genero> findAll(Connection con) throws SQLException {
-        // Crea el statement general.
+
         try (Statement stmt = con.createStatement()) {
-            // Realiza la consulta de la BBDD.
+
             ResultSet result = stmt.executeQuery("SELECT * FROM genero");
 
             return queryResult(result);
@@ -32,9 +32,9 @@ public class GeneroManagerImpl implements GeneroManager {
 
     @Override
     public Set<Genero> findByOrderAsc(Connection con)throws SQLException {
-        // Crea el statement general.
+
         try (Statement stmt = con.createStatement()) {
-            // Realiza la consulta de la BBDD.
+
             ResultSet result = stmt.executeQuery("SELECT * FROM genero ORDER BY genero ASC");
 
             return queryResult(result);
@@ -44,9 +44,9 @@ public class GeneroManagerImpl implements GeneroManager {
 
     @Override
     public Set<Genero> findByOrderDesc(Connection con) throws SQLException {
-        // Crea el statement general.
+
         try (Statement stmt = con.createStatement()) {
-            // Realiza la consulta de la BBDD.
+
             ResultSet result = stmt.executeQuery("SELECT * FROM genero ORDER BY genero DESC");
 
             return queryResult(result);

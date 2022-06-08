@@ -4,7 +4,6 @@ import edu.fpdual.webservice.model.dao.Usuarios;
 
 import java.sql.Connection;
 import java.sql.SQLException;
-import java.util.Set;
 
 /**
  * Usuarios DTO Manager.
@@ -16,11 +15,11 @@ import java.util.Set;
  */
 public interface UsuariosManager{
 
-    public Usuarios findUser (Connection con, String email) throws  SQLException;
-    public Usuarios login (Connection con, String email, String password) throws  SQLException;
-    public int createUser (Connection con, String email, String password) throws SQLException;
-    public int deleteUser (Connection con, String email) throws SQLException;
-    public int changePassword (Connection con ,String email, String newPassword) throws SQLException;
+    Usuarios findUser(Connection con, String email) throws SQLException;
+    Usuarios login(Connection con, String email, String password) throws SQLException;
+    int createUser(Connection con, String email, String password) throws SQLException;
+    int deleteUser(Connection con, String email) throws SQLException;
+    int changePassword(Connection con, String email, String newPassword) throws SQLException;
 
 
 

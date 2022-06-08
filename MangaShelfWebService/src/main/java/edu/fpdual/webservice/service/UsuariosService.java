@@ -7,7 +7,6 @@ import edu.fpdual.webservice.model.manager.impl.UsuariosManagerImpl;
 
 import java.sql.Connection;
 import java.sql.SQLException;
-import java.util.Set;
 
 public class UsuariosService {
 
@@ -17,13 +16,13 @@ public class UsuariosService {
         this.usuariosManager = usuariosManager;
     }
 
-    public Usuarios findUser (String email) throws  SQLException, ClassNotFoundException{
+    public Usuarios findUser(String email) throws  SQLException, ClassNotFoundException{
         try (Connection con = new MySQLConnector().getMySQLConnection()) {
             return usuariosManager.findUser(con, email);
         }
     }
 
-    public Usuarios login (String email, String password) throws  SQLException, ClassNotFoundException{
+    public Usuarios login(String email, String password) throws  SQLException, ClassNotFoundException{
         try (Connection con = new MySQLConnector().getMySQLConnection()) {
             return usuariosManager.login(con, email, password);
         }
@@ -41,7 +40,7 @@ public class UsuariosService {
         }
     }
 
-    public int changePassword(String email,String newPassword) throws SQLException, ClassNotFoundException {
+    public int changePassword(String email, String newPassword) throws SQLException, ClassNotFoundException {
         try (Connection con = new MySQLConnector().getMySQLConnection()) {
             return usuariosManager.changePassword(con, email, newPassword);
         }
