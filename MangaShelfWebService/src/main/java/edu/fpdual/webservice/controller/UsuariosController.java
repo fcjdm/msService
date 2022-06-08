@@ -22,8 +22,20 @@ public class UsuariosController {
     @GET
     @Path("/{email}")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response findUser(@PathParam("email") String email) throws SQLException, ClassNotFoundException {
-        return Response.ok().entity(usuariosService.findUser(email)).build();
+    public Response findUser(@PathParam("email") String email)  {
+        try{
+            Usuarios user = usuariosService.findUser(email);
+
+            if(user != null){
+                return Response.ok().entity(user).build();
+            }else{
+                return Response.status(404).entity("User not found").build();
+            }
+
+        }catch (SQLException | ClassNotFoundException e){
+            return Response.status(400).entity("Internal Error During DB Interaction").build();
+        }
+
     }
 
     @PATCH
@@ -39,7 +51,7 @@ public class UsuariosController {
             }
 
         }catch (SQLException | ClassNotFoundException e) {
-            return Response.status(500).entity("Internal Error During DB Interaction").build();
+            return Response.status(400).entity("Internal Error During DB Interaction").build();
         }
 
     }
@@ -83,13 +95,13 @@ public class UsuariosController {
     @PUT
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public void changePassword(Usuarios newUser){
+    public Response changePassword(Usuarios newUser){
         try {
-            if(usuariosService.changePassword(newUser.getEmailUsuario(), newUser.getContrasenyaUsuario()) != 1){
-                System.out.println(Response.status(500).entity("Internal Error During Password Change").build());
-            }
+            usuariosService.changePassword(newUser.getEmailUsuario(), newUser.getContrasenyaUsuario());
+            return Response.ok().build();
+
         } catch (SQLException | ClassNotFoundException e) {
-            System.out.println(Response.status(500).entity("Internal Error During DB Interaction").build());
+            return Response.status(400).entity("Internal Error During DB Interaction").build();
         }
     }
 
