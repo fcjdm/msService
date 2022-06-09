@@ -57,5 +57,10 @@ public class ObraUsuarioService {
             return obraUsuarioManager.updateStatus(con, email, obra, caps, status);
         }
     }
+    public Set<ObraUsuario> findByStatus(String email, String status) throws SQLException, ClassNotFoundException {
+        try (Connection con = new MySQLConnector().getMySQLConnection()) {
+            return obraUsuarioManager.findByStatus(con, email, status);
+        }
+    }
 
 }

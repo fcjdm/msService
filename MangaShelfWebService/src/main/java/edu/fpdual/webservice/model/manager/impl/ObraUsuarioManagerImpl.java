@@ -120,5 +120,23 @@ public class ObraUsuarioManagerImpl implements ObraUsuarioManager {
         }
     }
 
+    @Override
+    public Set<ObraUsuario> findByStatus(Connection con, String email, String status) throws SQLException {
+        try(PreparedStatement prepstm = con.prepareStatement("SELECT * FROM obra_usuario " +
+                "WHERE usuario LIKE ? AND estado LIKE ?")){
+
+            prepstm.setString(1, email);
+            prepstm.setString(2, status);
+
+            ResultSet result = prepstm.executeQuery();
+
+            if(result.next()){
+                return queryResult(result);
+            }else{
+                return null;
+            }
+        }
+    }
+
 }
 

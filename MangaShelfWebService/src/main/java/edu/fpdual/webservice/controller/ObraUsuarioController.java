@@ -11,6 +11,7 @@ import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 
 import java.sql.SQLException;
+import java.util.Set;
 
 @Path("/obrausuario")
 public class ObraUsuarioController {
@@ -25,12 +26,29 @@ public class ObraUsuarioController {
     @GET
     @Path("/get/{email}/{obra}")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response findByUser(@PathParam("email") String email, @PathParam("obra") String obra) throws SQLException, ClassNotFoundException{
+    public Response findByID(@PathParam("email") String email, @PathParam("obra") String obra) throws SQLException, ClassNotFoundException{
         try{
             ObraUsuario obus = obraUsuarioService.findByID(email, obra);
 
             if(obus != null){
                 return Response.ok().entity(obus).build();
+            }else{
+                return Response.status(404).entity("Not found").build();
+            }
+
+        }catch (SQLException | ClassNotFoundException e){
+            return Response.status(400).entity("Internal Error During DB Interaction").build();
+        }
+    }
+    @GET
+    @Path("/getstatus/{email}/{status}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response findByStatus(@PathParam("email") String email, @PathParam("status") String status) throws SQLException, ClassNotFoundException{
+        try{
+            Set<ObraUsuario> setObus = obraUsuarioService.findByStatus(email, status);
+
+            if(setObus != null){
+                return Response.ok().entity(setObus).build();
             }else{
                 return Response.status(404).entity("Not found").build();
             }
