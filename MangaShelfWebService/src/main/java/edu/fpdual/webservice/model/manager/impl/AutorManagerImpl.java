@@ -2,6 +2,7 @@ package edu.fpdual.webservice.model.manager.impl;
 
 
 import edu.fpdual.webservice.model.dao.Autor;
+import edu.fpdual.webservice.model.dao.Obra;
 import edu.fpdual.webservice.model.manager.AutorManager;
 
 import java.sql.*;
@@ -58,5 +59,24 @@ public class AutorManagerImpl implements AutorManager {
         }
 
         return set;
+    }
+
+    @Override
+    public Autor findByID(Connection con, String id) throws SQLException {
+        try(PreparedStatement prepstm = con.prepareStatement("SELECT * FROM autor " +
+                "WHERE titulos LIKE ?")){
+
+            prepstm.setString(1, id);
+
+            ResultSet result = prepstm.executeQuery();
+
+            if(result.next()){
+                result.beforeFirst();
+                result.next();
+                return new Autor(result);
+            } else{
+                return null;
+            }
+        }
     }
 }

@@ -1,5 +1,7 @@
 package edu.fpdual.webservice.model.manager;
 
+import edu.fpdual.webservice.model.dao.Obra;
+
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -15,5 +17,6 @@ public interface Manager<T> {
     public Set<T> findAll(Connection con) throws SQLException;
     public Set<T> findByName (Connection con, String name) throws SQLException;
     public Set<T> queryResult (ResultSet result) throws SQLException;
+    public T findByID (Connection con, String id) throws SQLException;
 
 }

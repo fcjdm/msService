@@ -47,4 +47,22 @@ public class GeneroController {
 
     }
 
+    @GET
+    @Path("/getid/{id}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response findByID(@PathParam("id") String id){
+        try{
+            Genero genero = generoService.findByID(id);
+            if(genero != null){
+                return Response.ok().entity(genero).build();
+            }else{
+                return Response.status(404).entity("Not found").build();
+            }
+
+        }catch (SQLException | ClassNotFoundException e){
+            return Response.status(500).entity("DB Error").build();
+        }
+
+    }
+
 }

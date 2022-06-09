@@ -29,6 +29,11 @@ public class AutorService {
             return autorManager.findByName(con, nombre);
         }
     }
+    public Autor findByID(String id) throws SQLException, ClassNotFoundException {
+        try (Connection con = new MySQLConnector().getMySQLConnection()) {
+            return autorManager.findByID(con, id);
+        }
+    }
 
 }
 

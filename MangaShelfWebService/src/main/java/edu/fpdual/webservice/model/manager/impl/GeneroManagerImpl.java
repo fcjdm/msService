@@ -1,6 +1,7 @@
 package edu.fpdual.webservice.model.manager.impl;
 
 
+import edu.fpdual.webservice.model.dao.Autor;
 import edu.fpdual.webservice.model.dao.Genero;
 import edu.fpdual.webservice.model.manager.GeneroManager;
 
@@ -57,5 +58,24 @@ public class GeneroManagerImpl implements GeneroManager {
         }
 
         return set;
+    }
+
+    @Override
+    public Genero findByID(Connection con, String id) throws SQLException {
+        try(PreparedStatement prepstm = con.prepareStatement("SELECT * FROM genero " +
+                "WHERE titulo LIKE ?")){
+
+            prepstm.setString(1, id);
+
+            ResultSet result = prepstm.executeQuery();
+
+            if(result.next()){
+                result.beforeFirst();
+                result.next();
+                return new Genero(result);
+            } else{
+                return null;
+            }
+        }
     }
 }

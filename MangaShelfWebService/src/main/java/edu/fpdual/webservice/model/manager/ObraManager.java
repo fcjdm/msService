@@ -16,7 +16,7 @@ import java.sql.SQLException;
  */
 public interface ObraManager extends Manager<Obra>{
 
-    public Obra findByID (Connection con, String id) throws SQLException;
+
 
 
 

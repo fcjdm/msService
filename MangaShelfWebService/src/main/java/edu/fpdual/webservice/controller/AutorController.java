@@ -1,6 +1,7 @@
 package edu.fpdual.webservice.controller;
 
 import edu.fpdual.webservice.model.dao.Autor;
+import edu.fpdual.webservice.model.dao.Obra;
 import edu.fpdual.webservice.model.manager.impl.AutorManagerImpl;
 import edu.fpdual.webservice.service.AutorService;
 import jakarta.ws.rs.*;
@@ -41,6 +42,24 @@ public class AutorController {
             }
         } catch (SQLException | ClassNotFoundException e) {
             return Response.status(500).entity("Internal Error During DB Interaction").build();
+        }
+
+    }
+
+    @GET
+    @Path("/getid/{id}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response findByID(@PathParam("id") String id){
+        try{
+            Autor autor = autorService.findByID(id);
+            if(autor != null){
+                return Response.ok().entity(autor).build();
+            }else{
+                return Response.status(404).entity("Not found").build();
+            }
+
+        }catch (SQLException | ClassNotFoundException e){
+            return Response.status(500).entity("DB Error").build();
         }
 
     }
