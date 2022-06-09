@@ -12,6 +12,4 @@ import edu.fpdual.webservice.model.dao.Genero;
  */
 public interface GeneroManager extends Manager<Genero>{
 
-
-
 }

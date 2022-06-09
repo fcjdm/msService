@@ -17,14 +17,22 @@ import java.util.Set;
  */
 public interface ObraUsuarioManager{
 
-    public Set<ObraUsuario> findByUser (Connection con, String email) throws SQLException;
-    public int addObra (Connection con, String email, String obraLeyendo) throws SQLException;
-    public int deleteObraUsuario (Connection con, String email, String obra) throws SQLException;
-    public int sumChap(Connection con, String email, String obra) throws SQLException;
-    public int resChap(Connection con, String email, String obra) throws SQLException;
-    public Set<ObraUsuario> queryResult (ResultSet result) throws SQLException;
-    public ObraUsuario findByID (Connection con, String email, String obra) throws SQLException;
-    public int updateStatus (Connection con, String email, String obra, int caps, String status) throws SQLException;
-    public Set<ObraUsuario> findByStatus(Connection con, String email, String status) throws SQLException;
+    Set<ObraUsuario> findByUser(Connection con, String email) throws SQLException;
+
+    int addObra(Connection con, String email, String obraLeyendo) throws SQLException;
+
+    int deleteObraUsuario(Connection con, String email, String obra) throws SQLException;
+
+    int sumChap(Connection con, String email, String obra) throws SQLException;
+
+    int resChap(Connection con, String email, String obra) throws SQLException;
+
+    Set<ObraUsuario> queryResult(ResultSet result) throws SQLException;
+
+    ObraUsuario findByID(Connection con, String email, String obra) throws SQLException;
+
+    int updateStatus(Connection con, String email, String obra, int caps, String status) throws SQLException;
+
+    Set<ObraUsuario> findByStatus(Connection con, String email, String status) throws SQLException;
 
 }

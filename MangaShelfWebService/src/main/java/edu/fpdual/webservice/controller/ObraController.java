@@ -1,6 +1,5 @@
 package edu.fpdual.webservice.controller;
 
-import edu.fpdual.webservice.model.dao.Autor;
 import edu.fpdual.webservice.model.dao.Obra;
 import edu.fpdual.webservice.model.manager.impl.ObraManagerImpl;
 import edu.fpdual.webservice.service.ObraService;
@@ -11,6 +10,14 @@ import jakarta.ws.rs.core.Response;
 import java.sql.SQLException;
 import java.util.Set;
 
+/**
+ * Obra.
+ *
+ * Controller de Obra.
+ *
+ * @author ikisaki
+ *
+ */
 @Path("/obra")
 public class ObraController {
 
@@ -23,12 +30,16 @@ public class ObraController {
     @GET
     @Path("/get")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response findAll(){
-        try{
+    public Response findAll() {
+
+        try {
+
             return Response.ok().entity(obraService.findAll()).build();
 
-        }catch (SQLException | ClassNotFoundException e){
+        } catch (SQLException | ClassNotFoundException e) {
+
             return Response.status(500).entity("DB Error").build();
+
         }
 
     }
@@ -36,21 +47,29 @@ public class ObraController {
     @GET
     @Path("/getid/{id}")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response findByID(@PathParam("id") String id){
-        try{
+    public Response findByID(@PathParam("id") String id) {
+
+        try {
+
             Obra obra = obraService.findByID(id);
-            if(obra != null){
+
+            if (obra != null) {
+
                 return Response.ok().entity(obra).build();
-            }else{
+
+            } else {
+
                 return Response.status(404).entity("Not found").build();
+
             }
 
-        }catch (SQLException | ClassNotFoundException e){
+        } catch (SQLException | ClassNotFoundException e) {
+
             return Response.status(500).entity("DB Error").build();
+
         }
 
     }
-
 
     @GET
     @Path("/get/{name}")
@@ -60,13 +79,19 @@ public class ObraController {
             Set<Obra> setObras= obraService.findByName(name);
 
             if (setObras != null) {
+
                 return Response.ok().entity(setObras).build();
+
             } else {
+
                 return Response.status(404).entity("Not found").build();
 
             }
+
         } catch (SQLException | ClassNotFoundException e) {
+
             return Response.status(500).entity("Internal Error During DB Interaction").build();
+
         }
 
     }

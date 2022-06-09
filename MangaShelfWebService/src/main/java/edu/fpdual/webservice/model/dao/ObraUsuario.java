@@ -12,6 +12,15 @@ import java.sql.SQLException;
 @EqualsAndHashCode
 @ToString
 @Builder
+
+/**
+ * ObraUsuario.
+ *
+ * DAO de ObraUsuario.
+ *
+ * @author ikisaki
+ *
+ */
 public class ObraUsuario {
 
     private String usuario;
@@ -20,11 +29,12 @@ public class ObraUsuario {
     private String estado;
 
     public ObraUsuario(ResultSet result) throws SQLException {
+
         setUsuario(result.getString("Usuario"));
         setObra(result.getString("Obra"));
         setCapitulosLeidos(result.getInt("CapitulosLeidos"));
         setEstado(result.getString("Estado"));
-    }
 
+    }
 
 }

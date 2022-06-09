@@ -17,12 +17,19 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.Set;
 
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.when;
 
+/**
+ * UsuariosManagerImplTest.
+ *
+ * Prueba de UsuariosManagerImpl.
+ *
+ * @author ikisaki
+ *
+ */
 @ExtendWith(MockitoExtension.class)
 class UsuariosManagerImplTest {
 
@@ -54,32 +61,108 @@ class UsuariosManagerImplTest {
 
             @Override
             public Boolean answer(InvocationOnMock invocationOnMock) throws Throwable {
-                if(counter < 1){
-                    counter++;
-                    return true;
-                } else {
-                    return false;
-                }
-            }
-        });
-        doReturn(expectedUsuarios.getEmailUsuario()).when(resultSet).getString(any());
 
+                if (counter < 1) {
+
+                    counter++;
+
+                    return true;
+
+                } else {
+
+                    return false;
+
+                }
+
+            }
+
+        });
+
+        doReturn(expectedUsuarios.getEmailUsuario()).when(resultSet).getString(any());
         when(resultSet.getString(any())).thenAnswer(new Answer<String>() {
 
             @Override
             public String answer(InvocationOnMock invocationOnMock) throws Throwable {
 
-                if (invocationOnMock.getArgument(0).equals("EmailUsuario")){
+                if (invocationOnMock.getArgument(0).equals("EmailUsuario")) {
+
                     return expectedUsuarios.getEmailUsuario();
+
                 } else if (invocationOnMock.getArgument(0).equals("ContrasenyaUsuario")) {
+
                     return expectedUsuarios.getContrasenyaUsuario();
+
                 } else {
+
                     return null;
+
                 }
+
             }
+
         });
 
         Usuarios usuarios = usuariosManager.login(connection,"","");
+
+        MatcherAssert.assertThat(usuarios, Matchers.is(expectedUsuarios));
+
+    }
+
+    @Test
+    void findUser_ok() throws SQLException {
+
+        Usuarios expectedUsuarios = new Usuarios("pipomasterclass@gmail.com", "Wachino");
+
+        when(connection.prepareStatement(any())).thenReturn(preparedStatement);
+        when(preparedStatement.executeQuery()).thenReturn(resultSet);
+        when(resultSet.next()).thenAnswer(new Answer<Boolean>() {
+
+            private int counter = 0;
+
+            @Override
+            public Boolean answer(InvocationOnMock invocationOnMock) throws Throwable {
+
+                if (counter < 1) {
+
+                    counter++;
+
+                    return true;
+
+                } else {
+
+                    return false;
+
+                }
+
+            }
+
+        });
+
+        doReturn(expectedUsuarios.getEmailUsuario()).when(resultSet).getString(any());
+        when(resultSet.getString(any())).thenAnswer(new Answer<String>() {
+
+            @Override
+            public String answer(InvocationOnMock invocationOnMock) throws Throwable {
+
+                if (invocationOnMock.getArgument(0).equals("EmailUsuario")) {
+
+                    return expectedUsuarios.getEmailUsuario();
+
+                } else if (invocationOnMock.getArgument(0).equals("ContrasenyaUsuario")) {
+
+                    return expectedUsuarios.getContrasenyaUsuario();
+
+                } else {
+
+                    return null;
+
+                }
+
+            }
+
+        });
+
+        Usuarios usuarios = usuariosManager.findUser(connection,"");
 
         MatcherAssert.assertThat(usuarios, Matchers.is(expectedUsuarios));
 

@@ -9,6 +9,12 @@ import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.Set;
 
+/**
+ * Obra DTO Service.
+ *
+ * @author ikisaki
+ *
+ */
 public class ObraService {
 
     private final ObraManager obraManager;
@@ -18,22 +24,33 @@ public class ObraService {
     }
 
     public Set<Obra> findAll() throws SQLException, ClassNotFoundException {
+
         try (Connection con = new MySQLConnector().getMySQLConnection()) {
+
             return obraManager.findAll(con);
+
         }
+
     }
 
-
     public Set<Obra> findByName(String nombre) throws SQLException, ClassNotFoundException {
+
         try (Connection con = new MySQLConnector().getMySQLConnection()) {
+
             return obraManager.findByName(con, nombre);
+
         }
+
     }
 
     public Obra findByID(String id) throws SQLException, ClassNotFoundException {
+
         try (Connection con = new MySQLConnector().getMySQLConnection()) {
+
             return obraManager.findByID(con, id);
+
         }
+
     }
 
 }

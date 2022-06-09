@@ -9,6 +9,12 @@ import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.Set;
 
+/**
+ * Autor DTO Service.
+ *
+ * @author ikisaki
+ *
+ */
 public class AutorService {
 
     private final AutorManager autorManager;
@@ -18,21 +24,34 @@ public class AutorService {
     }
 
     public Set<Autor> findAll() throws SQLException, ClassNotFoundException {
+
         try (Connection con = new MySQLConnector().getMySQLConnection()) {
+
             return autorManager.findAll(con);
+
         }
+
     }
 
 
     public Set<Autor> findByName(String nombre) throws SQLException, ClassNotFoundException {
+
         try (Connection con = new MySQLConnector().getMySQLConnection()) {
+
             return autorManager.findByName(con, nombre);
+
         }
+
     }
+
     public Autor findByID(String id) throws SQLException, ClassNotFoundException {
+
         try (Connection con = new MySQLConnector().getMySQLConnection()) {
+
             return autorManager.findByID(con, id);
+
         }
+
     }
 
 }

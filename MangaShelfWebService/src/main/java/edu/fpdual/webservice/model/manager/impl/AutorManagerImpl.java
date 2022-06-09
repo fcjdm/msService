@@ -1,8 +1,6 @@
 package edu.fpdual.webservice.model.manager.impl;
 
-
 import edu.fpdual.webservice.model.dao.Autor;
-import edu.fpdual.webservice.model.dao.Obra;
 import edu.fpdual.webservice.model.manager.AutorManager;
 
 import java.sql.*;
@@ -10,7 +8,7 @@ import java.util.LinkedHashSet;
 import java.util.Set;
 
 /**
- * Autor DTO Manager.
+ * Autor DTO ManagerImpl.
  *
  * Contiene todas las queries definidas utilizadas para la consulta y manipulacion de datos de Autor.
  *
@@ -29,54 +27,77 @@ public class AutorManagerImpl implements AutorManager {
             return queryResult(result);
 
         }
+
     }
 
     @Override
-    public Set<Autor> findByName(Connection con, String name) throws SQLException  {
-        try(PreparedStatement prepstm = con.prepareStatement("SELECT * FROM autor " +
-                "WHERE nombre LIKE ?")){
+    public Set<Autor> findByName(Connection con, String name) throws SQLException {
+
+        try (PreparedStatement prepstm = con.prepareStatement("SELECT * FROM autor " +
+                "WHERE nombre LIKE ?")) {
 
             prepstm.setString(1, "%" + name + "%");
 
             ResultSet result = prepstm.executeQuery();
 
-            if(result.next()){
+            if (result.next()) {
+
                 return queryResult(result);
-            }else{
+
+            } else {
+
                 return null;
+
             }
 
         }
-    }
 
-    @Override
-    public Set<Autor> queryResult(ResultSet result) throws SQLException {
-        Set<Autor> set = new LinkedHashSet<>();
-        result.beforeFirst();
-        while (result.next()) {
-            Autor autor = new Autor(result);
-            set.add(autor);
-        }
-
-        return set;
     }
 
     @Override
     public Autor findByID(Connection con, String id) throws SQLException {
-        try(PreparedStatement prepstm = con.prepareStatement("SELECT * FROM autor " +
+
+        try (PreparedStatement prepstm = con.prepareStatement("SELECT * FROM autor " +
                 "WHERE titulo LIKE ?")){
 
             prepstm.setString(1, id);
 
             ResultSet result = prepstm.executeQuery();
 
-            if(result.next()){
+            if (result.next()) {
+
                 result.beforeFirst();
                 result.next();
+
                 return new Autor(result);
-            } else{
+
+            } else {
+
                 return null;
+
             }
+
         }
+
     }
+
+    @Override
+    public Set<Autor> queryResult(ResultSet result) throws SQLException {
+
+        Set<Autor> set = new LinkedHashSet<>();
+
+        result.beforeFirst();
+
+        while (result.next()) {
+
+            Autor autor = new Autor(result);
+
+            set.add(autor);
+
+        }
+
+        return set;
+
+    }
+
 }

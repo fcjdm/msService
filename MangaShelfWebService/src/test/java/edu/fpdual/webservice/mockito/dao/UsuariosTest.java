@@ -17,6 +17,14 @@ import static org.mockito.Mockito.any;
 import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.when;
 
+/**
+ * UsuariosTest.
+ *
+ * Prueba de Usuarios.
+ *
+ * @author ikisaki
+ *
+ */
 @ExtendWith(MockitoExtension.class)
 public class UsuariosTest {
 
@@ -35,14 +43,22 @@ public class UsuariosTest {
             @Override
             public String answer(InvocationOnMock invocationOnMock) throws Throwable {
 
-                if (invocationOnMock.getArgument(0).equals("EmailUsuario")){
+                if (invocationOnMock.getArgument(0).equals("EmailUsuario")) {
+
                     return expectedUsuarios.getEmailUsuario();
+
                 } else if (invocationOnMock.getArgument(0).equals("ContrasenyaUsuario")) {
+
                     return expectedUsuarios.getContrasenyaUsuario();
+
                 } else {
+
                     return null;
+
                 }
+
             }
+
         });
 
         Usuarios actualUsuarios = new Usuarios(resultSet);

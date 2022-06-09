@@ -11,6 +11,7 @@ import java.util.Properties;
 
 /**
  * Clase responsable de la creación de la conexion con la BBDD de MySQL.
+ *
  * @author ikisaki
  *
  */
@@ -21,41 +22,56 @@ public class MySQLConnector {
     Properties prop = new Properties();
 
     public MySQLConnector() {
+
         try {
-            //Loads all the properties of file "config.properties".
+
             prop.load(getClass().getClassLoader().getResourceAsStream("config.properties"));
+
         } catch (IOException e) {
+
             e.printStackTrace();
+
         }
+
     }
 
     /**
-     * Creates the connection object for a MySQL DDBB
+     * Crea la conexión para la BBDD de MySQL
+     *
      * @return a {@link Connection}
      * @throws ClassNotFoundException
      * @throws SQLException
+     *
+     * @author ikisaki
+     *
      */
     public Connection getMySQLConnection() throws ClassNotFoundException, SQLException {
+
         try {
 
-            //Indicates which driver is going to be used.
             Class.forName(prop.getProperty(MySQLConstants.DRIVER));
 
-            //Creates the connection based on the obtained URL.
             return  DriverManager.getConnection(getURL());
 
         } catch (ClassNotFoundException | SQLException e) {
+
             e.printStackTrace();
             throw e;
+
         }
+
     }
 
     /**
-     * Obtains the URL to connect to a MySQL DDBB.
-     * @return an URL
+     * Obtiene la URL para conectar con la BBDD de MySQL.
+     *
+     * @return URL
+     *
+     * @author ikisaki
+     *
      */
     private String getURL() {
-        //jdbc:mysql://localhost:3306/mangas?user=root&password=1234&useSSL=false; + other attributes required by the DB.
+
         return new StringBuilder().append(prop.getProperty(MySQLConstants.URL_PREFIX))
                 .append(prop.getProperty(MySQLConstants.URL_HOST)).append(":")
                 .append(prop.getProperty(MySQLConstants.URL_PORT)).append("/")
@@ -67,12 +83,17 @@ public class MySQLConnector {
                 .append(prop.getProperty(MySQLConstants.USE_JDBC_COMPLIANT_TIMEZONE_SHIFT)).append(("&useLegacyDatetimeCode="))
                 .append(prop.getProperty(MySQLConstants.USE_LEGACY_DATE_TIME_CODE)).append(("&serverTimezone="))
                 .append(prop.getProperty(MySQLConstants.SERVER_TIMEZONE)).toString();
+
     }
 
     public static void main(String[] args) throws SQLException, ClassNotFoundException {
+
         MySQLConnector connector = new MySQLConnector();
+
         Connection connection = connector.getMySQLConnection();
+
         System.out.println(connection.getCatalog());
+
     }
 
 }

@@ -1,6 +1,5 @@
 package edu.fpdual.webservice.mockito.manager.impl;
 
-
 import edu.fpdual.webservice.model.dao.Genero;
 import edu.fpdual.webservice.model.manager.impl.GeneroManagerImpl;
 import org.hamcrest.MatcherAssert;
@@ -24,6 +23,14 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.when;
 
+/**
+ * GeneroManagerImplTest.
+ *
+ * Prueba de GeneroManagerImpl.
+ *
+ * @author ikisaki
+ *
+ */
 @ExtendWith(MockitoExtension.class)
 class GeneroManagerImplTest {
 
@@ -43,51 +50,6 @@ class GeneroManagerImplTest {
     private GeneroManagerImpl generoManager;
 
     @Test
-    void findAll_ok() throws SQLException {
-
-        Genero expectedGenero = new Genero("Accion", "Assassination Classroom");
-
-        when(connection.createStatement()).thenReturn(statement);
-        when(statement.executeQuery(any())).thenReturn(resultSet);
-        when(resultSet.next()).thenAnswer(new Answer<Boolean>() {
-
-            private int counter = 0;
-
-            @Override
-            public Boolean answer(InvocationOnMock invocationOnMock) throws Throwable {
-                if(counter < 1){
-                    counter++;
-                    return true;
-                } else {
-                    return false;
-                }
-            }
-        });
-
-        doReturn(expectedGenero.getGenero()).when(resultSet).getString(any());
-        when(resultSet.getString(any())).thenAnswer(new Answer<String>() {
-
-            @Override
-            public String answer(InvocationOnMock invocationOnMock) throws Throwable {
-
-                if(invocationOnMock.getArgument(0).equals("Genero")){
-                    return expectedGenero.getGenero();
-                } else if(invocationOnMock.getArgument(0).equals("Titulo")) {
-                    return expectedGenero.getTitulo();
-                } else{
-                    return null;
-                }
-            }
-        });
-
-        Set<Genero> generoSet = generoManager.findAll(connection);
-
-        MatcherAssert.assertThat(generoSet, Matchers.hasSize(1));
-        MatcherAssert.assertThat(generoSet.iterator().next(), Matchers.is(expectedGenero));
-
-    }
-
-    @Test
     void findByName_ok() throws SQLException {
 
         Genero expectedGenero = new Genero("Accion", "Assassination Classroom");
@@ -100,34 +62,111 @@ class GeneroManagerImplTest {
 
             @Override
             public Boolean answer(InvocationOnMock invocationOnMock) throws Throwable {
-                if(counter < 1){
+
+                if (counter < 1) {
+
                     counter++;
+
                     return true;
+
                 } else {
+
                     return false;
+
                 }
+
             }
+
         });
+
         doReturn(expectedGenero.getGenero()).when(resultSet).getString(any());
         when(resultSet.getString(any())).thenAnswer(new Answer<String>() {
 
             @Override
             public String answer(InvocationOnMock invocationOnMock) throws Throwable {
 
-                if(invocationOnMock.getArgument(0).equals("Genero")){
+                if (invocationOnMock.getArgument(0).equals("Genero")) {
+
                     return expectedGenero.getGenero();
+
                 } else if(invocationOnMock.getArgument(0).equals("Titulo")) {
+
                     return expectedGenero.getTitulo();
-                } else{
+
+                } else {
+
                     return null;
+
                 }
+
             }
+
         });
 
         Set<Genero> generoSet = generoManager.findByName(connection,"");
 
         MatcherAssert.assertThat(generoSet, Matchers.hasSize(1));
         MatcherAssert.assertThat(generoSet.iterator().next(), Matchers.is(expectedGenero));
+
+    }
+
+    @Test
+    void findByID_ok() throws SQLException {
+
+        Genero expectedGenero = new Genero("Accion", "Assassination Classroom");
+
+        when(connection.prepareStatement(any())).thenReturn(preparedStatement);
+        when(preparedStatement.executeQuery()).thenReturn(resultSet);
+        when(resultSet.next()).thenAnswer(new Answer<Boolean>() {
+
+            private int counter = 0;
+
+            @Override
+            public Boolean answer(InvocationOnMock invocationOnMock) throws Throwable {
+
+                if (counter < 1) {
+
+                    counter++;
+
+                    return true;
+
+                } else {
+
+                    return false;
+
+                }
+
+            }
+
+        });
+
+        doReturn(expectedGenero.getGenero()).when(resultSet).getString(any());
+        when(resultSet.getString(any())).thenAnswer(new Answer<String>() {
+
+            @Override
+            public String answer(InvocationOnMock invocationOnMock) throws Throwable {
+
+                if (invocationOnMock.getArgument(0).equals("Genero")) {
+
+                    return expectedGenero.getGenero();
+
+                } else if(invocationOnMock.getArgument(0).equals("Titulo")) {
+
+                    return expectedGenero.getTitulo();
+
+                } else {
+
+                    return null;
+
+                }
+
+            }
+
+        });
+
+        Genero genero = generoManager.findByID(connection,"");
+
+        MatcherAssert.assertThat(genero, Matchers.is(expectedGenero));
 
     }
 

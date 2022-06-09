@@ -17,6 +17,14 @@ import static org.mockito.Mockito.any;
 import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.when;
 
+/**
+ * AutorTest.
+ *
+ * Prueba de Autor.
+ *
+ * @author ikisaki
+ *
+ */
 @ExtendWith(MockitoExtension.class)
 public class AutorTest {
 
@@ -34,14 +42,22 @@ public class AutorTest {
             @Override
             public String answer(InvocationOnMock invocationOnMock) throws Throwable {
 
-                if (invocationOnMock.getArgument(0).equals("Titulo")){
+                if (invocationOnMock.getArgument(0).equals("Titulo")) {
+
                     return expectedAutor.getTitulo();
+
                 } else if (invocationOnMock.getArgument(0).equals("Nombre")) {
+
                     return expectedAutor.getNombre();
+
                 } else {
+
                     return null;
+
                 }
+
             }
+
         });
 
         Autor actualAutor = new Autor(resultSet);

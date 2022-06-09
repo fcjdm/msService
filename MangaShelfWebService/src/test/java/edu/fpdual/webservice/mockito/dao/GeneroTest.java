@@ -17,6 +17,14 @@ import static org.mockito.Mockito.any;
 import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.when;
 
+/**
+ * GeneroTest.
+ *
+ * Prueba de Genero.
+ *
+ * @author ikisaki
+ *
+ */
 @ExtendWith(MockitoExtension.class)
 public class GeneroTest {
 
@@ -34,14 +42,22 @@ public class GeneroTest {
             @Override
             public String answer(InvocationOnMock invocationOnMock) throws Throwable {
 
-                if (invocationOnMock.getArgument(0).equals("Genero")){
+                if (invocationOnMock.getArgument(0).equals("Genero")) {
+
                     return expectedGenero.getGenero();
+
                 } else if (invocationOnMock.getArgument(0).equals("Titulo")) {
+
                     return expectedGenero.getTitulo();
+
                 } else {
+
                     return null;
+
                 }
+
             }
+
         });
 
         Genero actualGenero = new Genero(resultSet);

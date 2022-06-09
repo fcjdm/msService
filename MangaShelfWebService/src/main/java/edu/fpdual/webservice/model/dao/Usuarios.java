@@ -12,15 +12,25 @@ import java.sql.SQLException;
 @EqualsAndHashCode
 @ToString
 @Builder
+
+/**
+ * Usuarios.
+ *
+ * DAO de Usuarios.
+ *
+ * @author ikisaki
+ *
+ */
 public class Usuarios {
 
     private String emailUsuario;
     private String contrasenyaUsuario;
 
     public Usuarios(ResultSet result) throws SQLException {
+
         setEmailUsuario(result.getString("EmailUsuario"));
         setContrasenyaUsuario(result.getString("ContrasenyaUsuario"));
-    }
 
+    }
 
 }

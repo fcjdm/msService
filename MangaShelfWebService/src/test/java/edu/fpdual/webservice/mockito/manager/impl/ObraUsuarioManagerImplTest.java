@@ -1,6 +1,5 @@
 package edu.fpdual.webservice.mockito.manager.impl;
 
-
 import edu.fpdual.webservice.model.dao.ObraUsuario;
 import edu.fpdual.webservice.model.manager.impl.ObraUsuarioManagerImpl;
 import org.hamcrest.MatcherAssert;
@@ -24,6 +23,14 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.when;
 
+/**
+ * ObraUsuarioManagerImplTest.
+ *
+ * Prueba de ObraUsuarioManagerImpl.
+ *
+ * @author ikisaki
+ *
+ */
 @ExtendWith(MockitoExtension.class)
 class ObraUsuarioManagerImplTest {
 
@@ -55,26 +62,41 @@ class ObraUsuarioManagerImplTest {
 
             @Override
             public Boolean answer(InvocationOnMock invocationOnMock) throws Throwable {
-                if(counter < 1){
+
+                if (counter < 1) {
+
                     counter++;
+
                     return true;
+
                 } else {
+
                     return false;
+
                 }
+
             }
+
         });
+
         doReturn(expectedObraUsuario.getUsuario()).when(resultSet).getString(any());
         when(resultSet.getInt(any())).thenAnswer(new Answer<Integer>() {
 
             @Override
             public Integer answer(InvocationOnMock invocationOnMock) throws Throwable {
 
-                if (invocationOnMock.getArgument(0).equals("CapitulosLeidos")){
+                if (invocationOnMock.getArgument(0).equals("CapitulosLeidos")) {
+
                     return expectedObraUsuario.getCapitulosLeidos();
+
                 } else {
+
                     return null;
+
                 }
+
             }
+
         });
 
         when(resultSet.getString(any())).thenAnswer(new Answer<String>() {
@@ -82,22 +104,115 @@ class ObraUsuarioManagerImplTest {
             @Override
             public String answer(InvocationOnMock invocationOnMock) throws Throwable {
 
-                if (invocationOnMock.getArgument(0).equals("Usuario")){
+                if (invocationOnMock.getArgument(0).equals("Usuario")) {
+
                     return expectedObraUsuario.getUsuario();
+
                 } else if (invocationOnMock.getArgument(0).equals("Obra")) {
+
                     return expectedObraUsuario.getObra();
+
                 } else if (invocationOnMock.getArgument(0).equals("Estado")) {
+
                     return expectedObraUsuario.getEstado();
+
                 } else {
+
                     return null;
+
                 }
+
             }
+
         });
 
         Set<ObraUsuario> obraUsuarioSet = obraUsuarioManager.findByUser(connection,"");
 
         MatcherAssert.assertThat(obraUsuarioSet, Matchers.hasSize(1));
         MatcherAssert.assertThat(obraUsuarioSet.iterator().next(), Matchers.is(expectedObraUsuario));
+
+    }
+
+    @Test
+    void findByID_ok() throws SQLException {
+
+        ObraUsuario expectedObraUsuario = new ObraUsuario("raimundatorcuatadeloscarpatos@gmail.com","Demon Slayer",12,"LEYENDO");
+
+        when(connection.prepareStatement(any())).thenReturn(preparedStatement);
+        when(preparedStatement.executeQuery()).thenReturn(resultSet);
+        when(resultSet.next()).thenAnswer(new Answer<Boolean>() {
+
+            private int counter = 0;
+
+            @Override
+            public Boolean answer(InvocationOnMock invocationOnMock) throws Throwable {
+
+                if (counter < 1) {
+
+                    counter++;
+
+                    return true;
+
+                } else {
+
+                    return false;
+
+                }
+
+            }
+
+        });
+
+        doReturn(expectedObraUsuario.getUsuario()).when(resultSet).getString(any());
+        when(resultSet.getInt(any())).thenAnswer(new Answer<Integer>() {
+
+            @Override
+            public Integer answer(InvocationOnMock invocationOnMock) throws Throwable {
+
+                if (invocationOnMock.getArgument(0).equals("CapitulosLeidos")) {
+
+                    return expectedObraUsuario.getCapitulosLeidos();
+
+                } else {
+
+                    return null;
+
+                }
+
+            }
+
+        });
+
+        when(resultSet.getString(any())).thenAnswer(new Answer<String>() {
+
+            @Override
+            public String answer(InvocationOnMock invocationOnMock) throws Throwable {
+
+                if (invocationOnMock.getArgument(0).equals("Usuario")) {
+
+                    return expectedObraUsuario.getUsuario();
+
+                } else if (invocationOnMock.getArgument(0).equals("Obra")) {
+
+                    return expectedObraUsuario.getObra();
+
+                } else if (invocationOnMock.getArgument(0).equals("Estado")) {
+
+                    return expectedObraUsuario.getEstado();
+
+                } else {
+
+                    return null;
+
+                }
+
+            }
+
+        });
+
+        ObraUsuario obraUsuario = obraUsuarioManager.findByID(connection,"", "");
+
+        MatcherAssert.assertThat(obraUsuario, Matchers.is(expectedObraUsuario));
 
     }
 

@@ -1,7 +1,5 @@
 package edu.fpdual.webservice.model.manager.impl;
 
-
-import edu.fpdual.webservice.model.dao.Autor;
 import edu.fpdual.webservice.model.dao.Genero;
 import edu.fpdual.webservice.model.manager.GeneroManager;
 
@@ -10,7 +8,7 @@ import java.util.LinkedHashSet;
 import java.util.Set;
 
 /**
- * Genero DTO Manager.
+ * Genero DTO ManagerImpl.
  *
  * Contiene todas las queries definidas utilizadas para la consulta y manipulacion de datos de Genero.
  *
@@ -26,56 +24,80 @@ public class GeneroManagerImpl implements GeneroManager {
 
             ResultSet result = stmt.executeQuery("SELECT * FROM genero");
 
-            if(result.next()){
+            if (result.next()) {
+
                 return queryResult(result);
-            }else{
+
+            } else {
+
                 return null;
+
             }
 
         }
+
     }
 
-
     @Override
-    public Set<Genero> findByName(Connection con, String name) throws SQLException  {
-        try(PreparedStatement prepstm = con.prepareStatement("SELECT * FROM genero " +
-                "WHERE genero LIKE ?")){
+    public Set<Genero> findByName(Connection con, String name) throws SQLException {
+
+        try (PreparedStatement prepstm = con.prepareStatement("SELECT * FROM genero " +
+                "WHERE genero LIKE ?")) {
 
             prepstm.setString(1, "%" + name + "%");
 
             ResultSet result = prepstm.executeQuery();
+
             return queryResult(result);
+
         }
+
     }
 
     @Override
     public Set<Genero> queryResult(ResultSet result) throws SQLException {
+
         Set<Genero> set = new LinkedHashSet<>();
+
         result.beforeFirst();
+
         while (result.next()) {
+
             Genero genero = new Genero(result);
+
             set.add(genero);
+
         }
 
         return set;
+
     }
 
     @Override
     public Genero findByID(Connection con, String id) throws SQLException {
-        try(PreparedStatement prepstm = con.prepareStatement("SELECT * FROM genero " +
-                "WHERE titulo LIKE ?")){
+
+        try (PreparedStatement prepstm = con.prepareStatement("SELECT * FROM genero " +
+                "WHERE titulo LIKE ?")) {
 
             prepstm.setString(1, id);
 
             ResultSet result = prepstm.executeQuery();
 
-            if(result.next()){
+            if (result.next()) {
+
                 result.beforeFirst();
                 result.next();
+
                 return new Genero(result);
-            } else{
+
+            } else {
+
                 return null;
+
             }
+
         }
+
     }
+
 }

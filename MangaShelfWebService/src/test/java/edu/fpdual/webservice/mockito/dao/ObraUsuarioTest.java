@@ -17,6 +17,14 @@ import static org.mockito.Mockito.any;
 import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.when;
 
+/**
+ * ObraUsuarioTest.
+ *
+ * Prueba de ObraUsuario.
+ *
+ * @author ikisaki
+ *
+ */
 @ExtendWith(MockitoExtension.class)
 public class ObraUsuarioTest {
 
@@ -34,12 +42,18 @@ public class ObraUsuarioTest {
             @Override
             public Integer answer(InvocationOnMock invocationOnMock) throws Throwable {
 
-                if (invocationOnMock.getArgument(0).equals("CapitulosLeidos")){
+                if (invocationOnMock.getArgument(0).equals("CapitulosLeidos")) {
+
                     return expectedObraUsuario.getCapitulosLeidos();
+
                 } else {
+
                     return null;
+
                 }
+
             }
+
         });
 
         when(resultSet.getString(any())).thenAnswer(new Answer<String>() {
@@ -47,16 +61,26 @@ public class ObraUsuarioTest {
             @Override
             public String answer(InvocationOnMock invocationOnMock) throws Throwable {
 
-                if (invocationOnMock.getArgument(0).equals("Usuario")){
+                if (invocationOnMock.getArgument(0).equals("Usuario")) {
+
                     return expectedObraUsuario.getUsuario();
+
                 } else if (invocationOnMock.getArgument(0).equals("Obra")) {
+
                     return expectedObraUsuario.getObra();
+
                 } else if (invocationOnMock.getArgument(0).equals("Estado")) {
+
                     return expectedObraUsuario.getEstado();
+
                 } else {
+
                     return null;
+
                 }
+
             }
+
         });
 
         ObraUsuario actualObraUsuario = new ObraUsuario(resultSet);

@@ -1,10 +1,6 @@
 package edu.fpdual.webservice.model.manager;
 
 import edu.fpdual.webservice.model.dao.Obra;
-import edu.fpdual.webservice.model.dao.ObraUsuario;
-
-import java.sql.Connection;
-import java.sql.SQLException;
 
 /**
  * Obra DTO Manager.
@@ -15,9 +11,5 @@ import java.sql.SQLException;
  *
  */
 public interface ObraManager extends Manager<Obra>{
-
-
-
-
 
 }

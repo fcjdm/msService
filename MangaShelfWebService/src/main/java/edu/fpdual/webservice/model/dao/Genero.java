@@ -12,15 +12,25 @@ import java.sql.SQLException;
 @EqualsAndHashCode
 @ToString
 @Builder
+
+/**
+ * Genero.
+ *
+ * DAO de Genero.
+ *
+ * @author ikisaki
+ *
+ */
 public class Genero {
 
     private String genero;
     private String titulo;
 
     public Genero(ResultSet result) throws SQLException {
+
         setGenero(result.getString("Genero"));
         setTitulo(result.getString("Titulo"));
-    }
 
+    }
 
 }

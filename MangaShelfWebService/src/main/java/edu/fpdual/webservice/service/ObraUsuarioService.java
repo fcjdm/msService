@@ -9,58 +9,100 @@ import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.Set;
 
+/**
+ * ObraUsuario DTO Service.
+ *
+ * @author ikisaki
+ *
+ */
 public class ObraUsuarioService {
 
     private final ObraUsuarioManager obraUsuarioManager;
 
-    public ObraUsuarioService(ObraUsuarioManagerImpl obraUsuarioManager){
+    public ObraUsuarioService(ObraUsuarioManagerImpl obraUsuarioManager) {
+
         this.obraUsuarioManager = obraUsuarioManager;
+
     }
 
     public Set<ObraUsuario> findByUser(String email) throws SQLException, ClassNotFoundException {
+
         try (Connection con = new MySQLConnector().getMySQLConnection()) {
+
             return obraUsuarioManager.findByUser(con, email);
+
         }
+
     }
 
     public int addObra(String email, String obraLeyendo) throws SQLException, ClassNotFoundException {
+
         try (Connection con = new MySQLConnector().getMySQLConnection()) {
+
             return obraUsuarioManager.addObra(con, email, obraLeyendo);
+
         }
+
     }
 
     public int deleteObraUsuario(String email, String obra) throws SQLException, ClassNotFoundException {
+
         try (Connection con = new MySQLConnector().getMySQLConnection()) {
+
             return obraUsuarioManager.deleteObraUsuario(con, email, obra);
+
         }
+
     }
 
     public int sumChap(String email, String obra) throws SQLException, ClassNotFoundException {
+
         try (Connection con = new MySQLConnector().getMySQLConnection()) {
+
             return obraUsuarioManager.sumChap(con, email, obra);
+
         }
+
     }
+
     public int resChap(String email, String obra) throws SQLException, ClassNotFoundException {
+
         try (Connection con = new MySQLConnector().getMySQLConnection()) {
+
             return obraUsuarioManager.resChap(con, email, obra);
+
         }
+
     }
 
     public ObraUsuario findByID(String email, String obra) throws SQLException, ClassNotFoundException {
+
         try (Connection con = new MySQLConnector().getMySQLConnection()) {
+
             return obraUsuarioManager.findByID(con, email, obra);
+
         }
+
     }
 
     public int updateStatus(String email, String obra, int caps, String status) throws SQLException, ClassNotFoundException {
+
         try (Connection con = new MySQLConnector().getMySQLConnection()) {
+
             return obraUsuarioManager.updateStatus(con, email, obra, caps, status);
+
         }
+
     }
+
     public Set<ObraUsuario> findByStatus(String email, String status) throws SQLException, ClassNotFoundException {
+
         try (Connection con = new MySQLConnector().getMySQLConnection()) {
+
             return obraUsuarioManager.findByStatus(con, email, status);
+
         }
+
     }
 
 }

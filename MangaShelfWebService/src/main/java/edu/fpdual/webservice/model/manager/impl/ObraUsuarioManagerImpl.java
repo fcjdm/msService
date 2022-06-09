@@ -9,7 +9,7 @@ import java.util.LinkedHashSet;
 import java.util.Set;
 
 /**
- * ObraUsuario DTO Manager.
+ * ObraUsuario DTO ManagerImpl.
  *
  * Contiene todas las queries definidas utilizadas para la consulta y manipulacion de datos de ObraUsuario.
  *
@@ -19,123 +19,169 @@ import java.util.Set;
 public class ObraUsuarioManagerImpl implements ObraUsuarioManager {
 
     @Override
-    public Set<ObraUsuario> findByUser(Connection con, String email) throws SQLException  {
-        try(PreparedStatement prepstm = con.prepareStatement("SELECT * FROM obra_usuario " +
-                "WHERE usuario LIKE ?")){
+    public Set<ObraUsuario> findByUser(Connection con, String email) throws SQLException {
+
+        try (PreparedStatement prepstm = con.prepareStatement("SELECT * FROM obra_usuario " +
+                "WHERE usuario LIKE ?")) {
 
             prepstm.setString(1, "%" + email + "%");
 
             ResultSet result = prepstm.executeQuery();
+
             return queryResult(result);
+
         }
+
     }
 
     @Override
     public int addObra(Connection con, String email, String obraLeyendo) throws SQLException {
 
-        try(PreparedStatement prepstm = con.prepareStatement("INSERT INTO obra_usuario(usuario, obra, capitulosLeidos, estado) " +
-                "VALUES (?,?,0,?)")){
+        try (PreparedStatement prepstm = con.prepareStatement("INSERT INTO obra_usuario(usuario, obra, capitulosLeidos, estado) " +
+                "VALUES (?,?,0,?)")) {
+
             prepstm.setString(1, email);
             prepstm.setString(2, obraLeyendo);
             prepstm.setString(3, Status.LEYENDO.toString());
+
             return prepstm.executeUpdate();
+
         }
+
     }
 
     @Override
     public int deleteObraUsuario(Connection con, String email, String obra) throws SQLException {
-        try(PreparedStatement prepstm = con.prepareStatement("DELETE FROM obra_usuario " +
-                "WHERE usuario = ? AND obra = ?")){
+
+        try (PreparedStatement prepstm = con.prepareStatement("DELETE FROM obra_usuario " +
+                "WHERE usuario = ? AND obra = ?")) {
+
             prepstm.setString(1, email);
             prepstm.setString(2, obra);
 
             return prepstm.executeUpdate();
+
         }
+
     }
 
     @Override
     public int sumChap(Connection con, String email, String obra) throws SQLException {
+
         try(PreparedStatement prepstm = con.prepareStatement("UPDATE obra_usuario " +
-                "SET capitulosLeidos = capitulosLeidos + 1 WHERE usuario = ? AND obra = ?")){
+                "SET capitulosLeidos = capitulosLeidos + 1 WHERE usuario = ? AND obra = ?")) {
+
             prepstm.setString(1, email);
             prepstm.setString(2, obra);
 
             return prepstm.executeUpdate();
+
         }
+
     }
 
     @Override
     public int resChap(Connection con, String email, String obra) throws SQLException {
+
         try(PreparedStatement prepstm = con.prepareStatement("UPDATE obra_usuario " +
-                "SET capitulosLeidos = capitulosLeidos - 1 WHERE usuario = ? AND obra = ?")){
+                "SET capitulosLeidos = capitulosLeidos - 1 WHERE usuario = ? AND obra = ?")) {
+
             prepstm.setString(1, email);
             prepstm.setString(2, obra);
 
             return prepstm.executeUpdate();
+
         }
+
     }
 
     @Override
     public Set<ObraUsuario> queryResult(ResultSet result) throws SQLException {
+
         Set<ObraUsuario> set = new LinkedHashSet<>();
+
         result.beforeFirst();
+
         while (result.next()) {
+
             ObraUsuario obraUsuario = new ObraUsuario(result);
+
             set.add(obraUsuario);
+
         }
 
         return set;
+
     }
 
     @Override
     public ObraUsuario findByID(Connection con, String email, String obra) throws SQLException {
-        try(PreparedStatement prepstm = con.prepareStatement("SELECT * FROM obra_usuario " +
-                "WHERE usuario LIKE ? AND obra LIKE ?")){
+
+        try (PreparedStatement prepstm = con.prepareStatement("SELECT * FROM obra_usuario " +
+                "WHERE usuario LIKE ? AND obra LIKE ?")) {
 
             prepstm.setString(1, email);
             prepstm.setString(2, obra);
 
             ResultSet result = prepstm.executeQuery();
 
-            if(result.next()){
+            if (result.next()) {
+
                 result.beforeFirst();
                 result.next();
+
                 return new ObraUsuario(result);
-            } else{
+
+            } else {
+
                 return null;
+
             }
+
         }
+
     }
 
     @Override
     public int updateStatus(Connection con, String email, String obra, int caps, String status) throws SQLException {
-        try(PreparedStatement prepstm = con.prepareStatement("UPDATE obra_usuario " +
-                "SET estado = ?, capitulosLeidos = ? WHERE usuario = ? AND obra = ?")){
+
+        try (PreparedStatement prepstm = con.prepareStatement("UPDATE obra_usuario " +
+                "SET estado = ?, capitulosLeidos = ? WHERE usuario = ? AND obra = ?")) {
+
             prepstm.setString(1, status);
             prepstm.setInt(2, caps);
             prepstm.setString(3, email);
             prepstm.setString(4, obra);
 
             return prepstm.executeUpdate();
+
         }
+
     }
 
     @Override
     public Set<ObraUsuario> findByStatus(Connection con, String email, String status) throws SQLException {
+
         try(PreparedStatement prepstm = con.prepareStatement("SELECT * FROM obra_usuario " +
-                "WHERE usuario LIKE ? AND estado LIKE ?")){
+                "WHERE usuario LIKE ? AND estado LIKE ?")) {
 
             prepstm.setString(1, email);
             prepstm.setString(2, status);
 
             ResultSet result = prepstm.executeQuery();
 
-            if(result.next()){
+            if (result.next()) {
+
                 return queryResult(result);
-            }else{
+
+            } else {
+
                 return null;
+
             }
+
         }
+
     }
 
 }

@@ -12,6 +12,4 @@ import edu.fpdual.webservice.model.dao.Autor;
  */
 public interface AutorManager extends Manager<Autor> {
 
-
-
 }

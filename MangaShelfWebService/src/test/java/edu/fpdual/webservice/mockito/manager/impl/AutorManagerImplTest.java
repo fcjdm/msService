@@ -23,6 +23,14 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.when;
 
+/**
+ * AutorManagerImplTest.
+ *
+ * Prueba de AutorManagerImpl.
+ *
+ * @author ikisaki
+ *
+ */
 @ExtendWith(MockitoExtension.class)
 class AutorManagerImplTest {
 
@@ -54,13 +62,20 @@ class AutorManagerImplTest {
 
             @Override
             public Boolean answer(InvocationOnMock invocationOnMock) throws Throwable {
-                if(counter < 1){
+
+                if (counter < 1) {
+
                     counter++;
+
                     return true;
+
                 } else {
+
                     return false;
                 }
+
             }
+
         });
 
         doReturn(expectedAutor.getNombre()).when(resultSet).getString(any());
@@ -69,14 +84,22 @@ class AutorManagerImplTest {
             @Override
             public String answer(InvocationOnMock invocationOnMock) throws Throwable {
 
-                if(invocationOnMock.getArgument(0).equals("Titulo")){
+                if (invocationOnMock.getArgument(0).equals("Titulo")) {
+
                     return expectedAutor.getTitulo();
+
                 } else if(invocationOnMock.getArgument(0).equals("Nombre")) {
+
                     return expectedAutor.getNombre();
-                } else{
+
+                } else {
+
                     return null;
+
                 }
+
             }
+
         });
 
         Set<Autor> autorSet = autorManager.findAll(connection);
@@ -87,7 +110,7 @@ class AutorManagerImplTest {
     }
 
     @Test
-    void findByName_ok() throws SQLException {
+    void findByID_ok() throws SQLException {
 
         Autor expectedAutor = new Autor("Assassination Classroom", "Yusei Matsui");
 
@@ -99,34 +122,50 @@ class AutorManagerImplTest {
 
             @Override
             public Boolean answer(InvocationOnMock invocationOnMock) throws Throwable {
-                if(counter < 1){
+
+                if (counter < 1) {
+
                     counter++;
+
                     return true;
+
                 } else {
+
                     return false;
+
                 }
+
             }
+
         });
+
         doReturn(expectedAutor.getNombre()).when(resultSet).getString(any());
         when(resultSet.getString(any())).thenAnswer(new Answer<String>() {
 
             @Override
             public String answer(InvocationOnMock invocationOnMock) throws Throwable {
 
-                if(invocationOnMock.getArgument(0).equals("Titulo")){
+                if (invocationOnMock.getArgument(0).equals("Titulo")) {
+
                     return expectedAutor.getTitulo();
+
                 } else if(invocationOnMock.getArgument(0).equals("Nombre")) {
+
                     return expectedAutor.getNombre();
-                } else{
+
+                } else {
+
                     return null;
+
                 }
+
             }
+
         });
 
-        Set<Autor> autorSet = autorManager.findByName(connection,"");
+        Autor autor = autorManager.findByID(connection,"");
 
-        MatcherAssert.assertThat(autorSet, Matchers.hasSize(1));
-        MatcherAssert.assertThat(autorSet.iterator().next(), Matchers.is(expectedAutor));
+        MatcherAssert.assertThat(autor, Matchers.is(expectedAutor));
 
     }
 

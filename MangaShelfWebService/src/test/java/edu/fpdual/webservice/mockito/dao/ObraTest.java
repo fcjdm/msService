@@ -17,6 +17,14 @@ import static org.mockito.Mockito.any;
 import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.when;
 
+/**
+ * ObraTest.
+ *
+ * Prueba de Obra.
+ *
+ * @author ikisaki
+ *
+ */
 @ExtendWith(MockitoExtension.class)
 public class ObraTest {
 
@@ -34,12 +42,17 @@ public class ObraTest {
             @Override
             public Integer answer(InvocationOnMock invocationOnMock) throws Throwable {
 
-                if (invocationOnMock.getArgument(0).equals("AnyoPublicacion")){
+                if (invocationOnMock.getArgument(0).equals("AnyoPublicacion")) {
+
                     return expectedObra.getAnyoPublicacion();
+
                 } else {
+
                     return null;
                 }
+
             }
+
         });
 
         when(resultSet.getString(any())).thenAnswer(new Answer<String>() {
@@ -47,18 +60,30 @@ public class ObraTest {
             @Override
             public String answer(InvocationOnMock invocationOnMock) throws Throwable {
 
-                if (invocationOnMock.getArgument(0).equals("Id")){
+                if (invocationOnMock.getArgument(0).equals("Id")) {
+
                     return expectedObra.getId();
+
                 } else if (invocationOnMock.getArgument(0).equals("Titulo")) {
+
                     return expectedObra.getTitulo();
+
                 } else if (invocationOnMock.getArgument(0).equals("AnyoTermino")) {
+
                     return expectedObra.getAnyoTermino();
+
                 } else if (invocationOnMock.getArgument(0).equals("CapitulosTotales")) {
+
                     return expectedObra.getCapitulosTotales();
+
                 } else {
+
                     return null;
+
                 }
+
             }
+
         });
 
         Obra actualObra = new Obra(resultSet);

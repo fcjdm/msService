@@ -1,10 +1,7 @@
 package edu.fpdual.webservice.controller;
 
-import edu.fpdual.webservice.model.dao.Obra;
 import edu.fpdual.webservice.model.dao.ObraUsuario;
-import edu.fpdual.webservice.model.dao.Usuarios;
 import edu.fpdual.webservice.model.manager.impl.ObraUsuarioManagerImpl;
-import edu.fpdual.webservice.service.ObraService;
 import edu.fpdual.webservice.service.ObraUsuarioService;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
@@ -13,6 +10,14 @@ import jakarta.ws.rs.core.Response;
 import java.sql.SQLException;
 import java.util.Set;
 
+/**
+ * ObraUsuario.
+ *
+ * Controller de ObraUsuario.
+ *
+ * @author ikisaki
+ *
+ */
 @Path("/obrausuario")
 public class ObraUsuarioController {
 
@@ -22,116 +27,176 @@ public class ObraUsuarioController {
         this.obraUsuarioService = new ObraUsuarioService(new ObraUsuarioManagerImpl());
     }
 
-
     @GET
     @Path("/get/{email}/{obra}")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response findByID(@PathParam("email") String email, @PathParam("obra") String obra) throws SQLException, ClassNotFoundException{
-        try{
+    public Response findByID(@PathParam("email") String email, @PathParam("obra") String obra) throws SQLException, ClassNotFoundException {
+
+        try {
+
             ObraUsuario obus = obraUsuarioService.findByID(email, obra);
 
-            if(obus != null){
+            if (obus != null) {
+
                 return Response.ok().entity(obus).build();
-            }else{
+
+            } else {
+
                 return Response.status(404).entity("Not found").build();
+
             }
 
-        }catch (SQLException | ClassNotFoundException e){
+        } catch (SQLException | ClassNotFoundException e) {
+
             return Response.status(400).entity("Internal Error During DB Interaction").build();
+
         }
+
     }
+
     @GET
     @Path("/getstatus/{email}/{status}")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response findByStatus(@PathParam("email") String email, @PathParam("status") String status) throws SQLException, ClassNotFoundException{
-        try{
+    public Response findByStatus(@PathParam("email") String email, @PathParam("status") String status) throws SQLException, ClassNotFoundException {
+
+        try {
+
             Set<ObraUsuario> setObus = obraUsuarioService.findByStatus(email, status);
 
-            if(setObus != null){
+            if (setObus != null) {
+
                 return Response.ok().entity(setObus).build();
-            }else{
+
+            } else {
+
                 return Response.status(404).entity("Not found").build();
+
             }
 
-        }catch (SQLException | ClassNotFoundException e){
+        } catch (SQLException | ClassNotFoundException e) {
+
             return Response.status(400).entity("Internal Error During DB Interaction").build();
+
         }
+
     }
 
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     public Response addObra(ObraUsuario obus) throws SQLException, ClassNotFoundException {
+
         try {
+
             ObraUsuario obraUsuario = obraUsuarioService.findByID(obus.getUsuario(), obus.getUsuario());
 
-            if(obraUsuario == null){
+            if (obraUsuario == null) {
+
                 obraUsuarioService.addObra(obus.getUsuario(), obus.getObra());
+
                 return Response.ok().entity(obraUsuarioService.findByID(obus.getUsuario(), obus.getUsuario())).build();
-            }else{
+
+            } else {
+
                 return Response.status(500).entity("Not found").build();
+
             }
+
         } catch (SQLException | ClassNotFoundException e) {
+
             return Response.status(400).entity("Internal Error During DB Interaction").build();
+
         }
+
     }
 
     @DELETE
     @Path("/{email}/{obra}")
     @Produces(MediaType.TEXT_PLAIN)
     public Response deleteUser(@PathParam("email") String email, @PathParam("obra") String obra) {
+
         try {
+
             obraUsuarioService.findByID(email, obra);
+
             return Response.ok().entity(obraUsuarioService.deleteObraUsuario(email, obra)).build();
+
         } catch (SQLException | ClassNotFoundException e) {
+
             return Response.status(400).entity("Internal Error During DB Interaction").build();
+
         }
+
     }
 
     @PUT
     @Path("/update")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public Response updateStatus(ObraUsuario obus){
+    public Response updateStatus(ObraUsuario obus) {
+
         try {
+
             obraUsuarioService.updateStatus(obus.getUsuario(),obus.getObra(),obus.getCapitulosLeidos(), obus.getEstado());
+
             return Response.ok().entity(obraUsuarioService.findByID(obus.getUsuario(), obus.getObra())).build();
+
         } catch (SQLException | ClassNotFoundException e) {
+
             return Response.status(400).entity("Internal Error During DB Interaction").build();
+
         }
+
     }
 
     @PUT
     @Path("/sum")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public Response sumChap(ObraUsuario obus){
+    public Response sumChap(ObraUsuario obus) {
+
         try {
+
             obraUsuarioService.sumChap(obus.getUsuario(),obus.getObra());
+
             return Response.ok().entity(obraUsuarioService.findByID(obus.getUsuario(), obus.getObra())).build();
 
         } catch (SQLException | ClassNotFoundException e) {
+
             return Response.status(400).entity("Internal Error During DB Interaction").build();
+
         }
+
     }
 
     @PUT
     @Path("/res")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public Response resChap(ObraUsuario obus){
+    public Response resChap(ObraUsuario obus) {
+
         try {
+
             ObraUsuario obrausuario = obraUsuarioService.findByID(obus.getUsuario(),obus.getObra());
-            if(obrausuario.getCapitulosLeidos() > 0){
+
+            if (obrausuario.getCapitulosLeidos() > 0) {
+
                 obraUsuarioService.resChap(obus.getUsuario(),obus.getObra());
+
                 return Response.ok().entity(obraUsuarioService.findByID(obus.getUsuario(), obus.getObra())).build();
-            }else {
+
+            } else {
+
                 return Response.status(500).entity("Error while resting").build();
+
             }
 
         } catch (SQLException | ClassNotFoundException e) {
+
             return Response.status(400).entity("Internal Error During DB Interaction").build();
+
         }
+
     }
 
 }
