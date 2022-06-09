@@ -64,7 +64,7 @@ public class AutorManagerImpl implements AutorManager {
     @Override
     public Autor findByID(Connection con, String id) throws SQLException {
         try(PreparedStatement prepstm = con.prepareStatement("SELECT * FROM autor " +
-                "WHERE titulos LIKE ?")){
+                "WHERE titulo LIKE ?")){
 
             prepstm.setString(1, id);
 
