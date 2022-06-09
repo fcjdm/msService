@@ -33,6 +33,24 @@ public class ObraController {
 
     }
 
+    @GET
+    @Path("/get/{id}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response findByID(@PathParam("id") String id){
+        try{
+            Obra obra = obraService.findByID(id);
+            if(obra != null){
+                return Response.ok().entity(obra).build();
+            }else{
+                return Response.status(404).entity("Not found").build();
+            }
+
+        }catch (SQLException | ClassNotFoundException e){
+            return Response.status(500).entity("DB Error").build();
+        }
+
+    }
+
 
     @GET
     @Path("/get/{name}")
