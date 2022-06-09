@@ -78,18 +78,6 @@
       <version>8.0.11</version>
     </dependency>
 
-    <!-- Dep. JavaFX -->
-    <dependency>
-      <groupId>org.openjfx</groupId>
-      <artifactId>javafx-controls</artifactId>
-      <version>18</version>
-    </dependency>
-    <dependency>
-      <groupId>org.openjfx</groupId>
-      <artifactId>javafx-fxml</artifactId>
-      <version>18</version>
-    </dependency>
-
     <!-- Dep. lombok -->
     <dependency>
       <groupId>org.projectlombok</groupId>
@@ -104,18 +92,6 @@
       <artifactId>mockito-core</artifactId>
       <version>4.5.1</version>
       <scope>test</scope>
-    </dependency>
-
-    <!-- dep. JavaMail-->
-    <dependency>
-      <groupId>com.sun.mail</groupId>
-      <artifactId>javax.mail</artifactId>
-      <version>1.6.2</version>
-    </dependency>
-    <dependency>
-      <groupId>javax.activation</groupId>
-      <artifactId>activation</artifactId>
-      <version>1.1</version>
     </dependency>
     <dependency>
       <groupId>org.mockito</groupId>
