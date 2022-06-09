@@ -71,12 +71,12 @@ public class ObraUsuarioController {
     }
 
     @PUT
-    @Path("/updatestatus")
+    @Path("/update")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     public Response updateStatus(ObraUsuario obus){
         try {
-            obraUsuarioService.updateStatus(obus.getUsuario(),obus.getObra(),obus.getEstado());
+            obraUsuarioService.updateStatus(obus.getUsuario(),obus.getObra(),obus.getCapitulosLeidos(), obus.getEstado());
             return Response.ok().entity(obraUsuarioService.findByID(obus.getUsuario(), obus.getObra())).build();
         } catch (SQLException | ClassNotFoundException e) {
             return Response.status(400).entity("Internal Error During DB Interaction").build();

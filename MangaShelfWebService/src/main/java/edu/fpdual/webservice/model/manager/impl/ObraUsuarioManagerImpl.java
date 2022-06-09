@@ -108,12 +108,13 @@ public class ObraUsuarioManagerImpl implements ObraUsuarioManager {
     }
 
     @Override
-    public int updateStatus(Connection con, String email, String obra, String status) throws SQLException {
+    public int updateStatus(Connection con, String email, String obra, int caps, String status) throws SQLException {
         try(PreparedStatement prepstm = con.prepareStatement("UPDATE obra_usuario " +
-                "SET estado = ? WHERE usuario = ? AND obra = ?")){
+                "SET estado = ?, capitulosLeidos = ? WHERE usuario = ? AND obra = ?")){
             prepstm.setString(1, status);
-            prepstm.setString(2, email);
-            prepstm.setString(3, obra);
+            prepstm.setInt(2, caps);
+            prepstm.setString(3, email);
+            prepstm.setString(4, obra);
 
             return prepstm.executeUpdate();
         }

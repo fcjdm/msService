@@ -24,6 +24,6 @@ public interface ObraUsuarioManager{
     public int resChap(Connection con, String email, String obra) throws SQLException;
     public Set<ObraUsuario> queryResult (ResultSet result) throws SQLException;
     public ObraUsuario findByID (Connection con, String email, String obra) throws SQLException;
-    public int updateStatus (Connection con, String email, String obra, String status) throws SQLException;
+    public int updateStatus (Connection con, String email, String obra, int caps, String status) throws SQLException;
 
 }

@@ -1,6 +1,10 @@
 package edu.fpdual.webservice.model.manager;
 
 import edu.fpdual.webservice.model.dao.Obra;
+import edu.fpdual.webservice.model.dao.ObraUsuario;
+
+import java.sql.Connection;
+import java.sql.SQLException;
 
 /**
  * Obra DTO Manager.
@@ -11,6 +15,8 @@ import edu.fpdual.webservice.model.dao.Obra;
  *
  */
 public interface ObraManager extends Manager<Obra>{
+
+    public Obra findByID (Connection con, String id) throws SQLException;
 
 
 

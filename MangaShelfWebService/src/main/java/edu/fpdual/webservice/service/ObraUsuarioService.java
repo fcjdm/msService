@@ -52,9 +52,9 @@ public class ObraUsuarioService {
         }
     }
 
-    public int updateStatus(String email, String obra, String status) throws SQLException, ClassNotFoundException {
+    public int updateStatus(String email, String obra, int caps, String status) throws SQLException, ClassNotFoundException {
         try (Connection con = new MySQLConnector().getMySQLConnection()) {
-            return obraUsuarioManager.updateStatus(con, email, obra, status);
+            return obraUsuarioManager.updateStatus(con, email, obra, caps, status);
         }
     }
 

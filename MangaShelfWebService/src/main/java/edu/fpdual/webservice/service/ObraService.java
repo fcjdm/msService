@@ -30,4 +30,10 @@ public class ObraService {
         }
     }
 
+    public Obra findByID(String id) throws SQLException, ClassNotFoundException {
+        try (Connection con = new MySQLConnector().getMySQLConnection()) {
+            return obraManager.findByID(con, id);
+        }
+    }
+
 }

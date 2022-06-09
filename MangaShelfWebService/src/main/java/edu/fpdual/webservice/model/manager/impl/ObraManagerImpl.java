@@ -1,6 +1,7 @@
 package edu.fpdual.webservice.model.manager.impl;
 
 import edu.fpdual.webservice.model.dao.Obra;
+import edu.fpdual.webservice.model.dao.Usuarios;
 import edu.fpdual.webservice.model.manager.ObraManager;
 
 import java.sql.*;
@@ -48,6 +49,25 @@ public class ObraManagerImpl implements ObraManager {
     }
 
     @Override
+    public Obra findByID(Connection con, String id) throws SQLException  {
+        try(PreparedStatement prepstm = con.prepareStatement("SELECT * FROM obra " +
+                "WHERE id LIKE ?")){
+
+            prepstm.setString(1, id);
+
+            ResultSet result = prepstm.executeQuery();
+
+            if(result.next()){
+                result.beforeFirst();
+                result.next();
+                return new Obra(result);
+            } else{
+                return null;
+            }
+        }
+    }
+
+    @Override
     public Set<Obra> queryResult(ResultSet result) throws SQLException {
         Set<Obra> set = new LinkedHashSet<>();
         result.beforeFirst();
@@ -58,4 +78,5 @@ public class ObraManagerImpl implements ObraManager {
 
         return set;
     }
+
 }
