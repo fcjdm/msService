@@ -29,21 +29,32 @@ public class ObraUsuarioService {
         }
     }
 
-    public int deleteObraUsuario(String email) throws SQLException, ClassNotFoundException {
+    public int deleteObraUsuario(String email, String obra) throws SQLException, ClassNotFoundException {
         try (Connection con = new MySQLConnector().getMySQLConnection()) {
-            return obraUsuarioManager.deleteObraUsuario(con, email);
+            return obraUsuarioManager.deleteObraUsuario(con, email, obra);
         }
     }
 
-    public int sumarCapitulo(String email, String obraLeyendo) throws SQLException, ClassNotFoundException {
+    public int sumChap(String email, String obra) throws SQLException, ClassNotFoundException {
         try (Connection con = new MySQLConnector().getMySQLConnection()) {
-            return obraUsuarioManager.sumarCapitulo(con, email, obraLeyendo);
+            return obraUsuarioManager.sumChap(con, email, obra);
+        }
+    }
+    public int resChap(String email, String obra) throws SQLException, ClassNotFoundException {
+        try (Connection con = new MySQLConnector().getMySQLConnection()) {
+            return obraUsuarioManager.sumChap(con, email, obra);
         }
     }
 
     public ObraUsuario findByID(String email, String obra) throws SQLException, ClassNotFoundException {
         try (Connection con = new MySQLConnector().getMySQLConnection()) {
             return obraUsuarioManager.findByID(con, email, obra);
+        }
+    }
+
+    public int updateStatus(String email, String obra, String status) throws SQLException, ClassNotFoundException {
+        try (Connection con = new MySQLConnector().getMySQLConnection()) {
+            return obraUsuarioManager.updateStatus(con, email, obra, status);
         }
     }
 

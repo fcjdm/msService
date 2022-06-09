@@ -4,6 +4,7 @@ import edu.fpdual.webservice.model.dao.Obra;
 import edu.fpdual.webservice.model.dao.ObraUsuario;
 import edu.fpdual.webservice.model.dao.Usuarios;
 import edu.fpdual.webservice.model.manager.impl.ObraUsuarioManagerImpl;
+import edu.fpdual.webservice.service.ObraService;
 import edu.fpdual.webservice.service.ObraUsuarioService;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
@@ -58,29 +59,60 @@ public class ObraUsuarioController {
     }
 
     @DELETE
-    @Path("/delete/{email}")
-    @Produces(MediaType.APPLICATION_JSON)
-    public void deleteUser(@PathParam("email") String email) {
+    @Path("/{email}/{obra}")
+    @Produces(MediaType.TEXT_PLAIN)
+    public Response deleteUser(@PathParam("email") String email, @PathParam("obra") String obra) {
         try {
-            if (obraUsuarioService.deleteObraUsuario(email) != 1) {
-                System.out.println(Response.status(304).entity("User Was Not Deleted").build());
-            }
+            obraUsuarioService.findByID(email, obra);
+            return Response.ok().entity(obraUsuarioService.deleteObraUsuario(email, obra)).build();
         } catch (SQLException | ClassNotFoundException e) {
-            System.out.println(Response.status(500).entity("Internal Error During DB Interaction").build());
+            return Response.status(400).entity("Internal Error During DB Interaction").build();
         }
-
     }
 
     @PUT
-    @Path("/update/{email}/{obraleyendo}")
+    @Path("/updatestatus")
+    @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public void changePassword(@PathParam("email") String email, @PathParam("obraleyendo") String obraLeyendo){
+    public Response updateStatus(ObraUsuario obus){
         try {
-            if(obraUsuarioService.sumarCapitulo(email, obraLeyendo) != 1){
-                System.out.println(Response.status(500).entity("Internal Error During Chapter Addition").build());
-            }
+            obraUsuarioService.updateStatus(obus.getUsuario(),obus.getObra(),obus.getEstado());
+            return Response.ok().entity(obraUsuarioService.findByID(obus.getUsuario(), obus.getObra())).build();
         } catch (SQLException | ClassNotFoundException e) {
-            System.out.println(Response.status(500).entity("Internal Error During DB Interaction").build());
+            return Response.status(400).entity("Internal Error During DB Interaction").build();
+        }
+    }
+
+    @PUT
+    @Path("/sum")
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response sumChap(ObraUsuario obus){
+        try {
+            obraUsuarioService.sumChap(obus.getUsuario(),obus.getObra());
+            return Response.ok().entity(obraUsuarioService.findByID(obus.getUsuario(), obus.getObra())).build();
+
+        } catch (SQLException | ClassNotFoundException e) {
+            return Response.status(400).entity("Internal Error During DB Interaction").build();
+        }
+    }
+
+    @PUT
+    @Path("/res")
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response resChap(ObraUsuario obus){
+        try {
+            ObraUsuario obrausuario = obraUsuarioService.findByID(obus.getUsuario(),obus.getObra());
+            if(obrausuario.getCapitulosLeidos() > 0){
+                obraUsuarioService.resChap(obus.getUsuario(),obus.getObra());
+                return Response.ok().entity(obraUsuarioService.findByID(obus.getUsuario(), obus.getObra())).build();
+            }else {
+                return Response.status(500).entity("Error while resting").build();
+            }
+
+        } catch (SQLException | ClassNotFoundException e) {
+            return Response.status(400).entity("Internal Error During DB Interaction").build();
         }
     }
 

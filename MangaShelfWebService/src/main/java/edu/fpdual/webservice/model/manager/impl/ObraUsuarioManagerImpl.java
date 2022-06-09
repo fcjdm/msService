@@ -2,7 +2,6 @@ package edu.fpdual.webservice.model.manager.impl;
 
 import edu.fpdual.webservice.Status;
 import edu.fpdual.webservice.model.dao.ObraUsuario;
-import edu.fpdual.webservice.model.dao.Usuarios;
 import edu.fpdual.webservice.model.manager.ObraUsuarioManager;
 
 import java.sql.*;
@@ -35,29 +34,42 @@ public class ObraUsuarioManagerImpl implements ObraUsuarioManager {
     public int addObra(Connection con, String email, String obraLeyendo) throws SQLException {
 
         try(PreparedStatement prepstm = con.prepareStatement("INSERT INTO obra_usuario(usuario, obra, capitulosLeidos, estado) " +
-                "VALUES (?,?,0,'LEYENDO')")){
+                "VALUES (?,?,0,?)")){
             prepstm.setString(1, email);
             prepstm.setString(2, obraLeyendo);
+            prepstm.setString(3, Status.LEYENDO.toString());
             return prepstm.executeUpdate();
         }
     }
 
     @Override
-    public int deleteObraUsuario(Connection con, String email) throws SQLException {
+    public int deleteObraUsuario(Connection con, String email, String obra) throws SQLException {
         try(PreparedStatement prepstm = con.prepareStatement("DELETE FROM obra_usuario " +
-                "WHERE usuario = ?")){
+                "WHERE usuario = ? AND obra = ?")){
             prepstm.setString(1, email);
+            prepstm.setString(2, obra);
 
             return prepstm.executeUpdate();
         }
     }
 
     @Override
-    public int sumarCapitulo(Connection con, String email, String obraLeyendo) throws SQLException {
+    public int sumChap(Connection con, String email, String obra) throws SQLException {
         try(PreparedStatement prepstm = con.prepareStatement("UPDATE obra_usuario " +
                 "SET capitulosLeidos = capitulosLeidos + 1 WHERE usuario = ? AND obra = ?")){
             prepstm.setString(1, email);
-            prepstm.setString(2, obraLeyendo);
+            prepstm.setString(2, obra);
+
+            return prepstm.executeUpdate();
+        }
+    }
+
+    @Override
+    public int resChap(Connection con, String email, String obra) throws SQLException {
+        try(PreparedStatement prepstm = con.prepareStatement("UPDATE obra_usuario " +
+                "SET capitulosLeidos = capitulosLeidos - 1 WHERE usuario = ? AND obra = ?")){
+            prepstm.setString(1, email);
+            prepstm.setString(2, obra);
 
             return prepstm.executeUpdate();
         }
@@ -92,6 +104,18 @@ public class ObraUsuarioManagerImpl implements ObraUsuarioManager {
             } else{
                 return null;
             }
+        }
+    }
+
+    @Override
+    public int updateStatus(Connection con, String email, String obra, String status) throws SQLException {
+        try(PreparedStatement prepstm = con.prepareStatement("UPDATE obra_usuario " +
+                "SET estado = ? WHERE usuario = ? AND obra = ?")){
+            prepstm.setString(1, status);
+            prepstm.setString(2, email);
+            prepstm.setString(3, obra);
+
+            return prepstm.executeUpdate();
         }
     }
 
