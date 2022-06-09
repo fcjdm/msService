@@ -53,7 +53,7 @@ public class ObraController {
 
 
     @GET
-    @Path("/get/{name}")
+    @Path("/getid/{name}")
     @Produces(MediaType.APPLICATION_JSON)
     public Response findByName(@PathParam("name") String name) {
         try {
