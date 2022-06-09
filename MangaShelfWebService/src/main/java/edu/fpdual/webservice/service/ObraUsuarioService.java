@@ -42,7 +42,7 @@ public class ObraUsuarioService {
     }
     public int resChap(String email, String obra) throws SQLException, ClassNotFoundException {
         try (Connection con = new MySQLConnector().getMySQLConnection()) {
-            return obraUsuarioManager.sumChap(con, email, obra);
+            return obraUsuarioManager.resChap(con, email, obra);
         }
     }
 
